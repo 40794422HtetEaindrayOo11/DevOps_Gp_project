@@ -1,4 +1,4 @@
-FROM openjdk:18
-COPY ./target/classes/com /tmp/com
+FROM openjdk:latest
+COPY ./target/GroupProject-1.0-SNAPSHOT-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "com.napier.gp_project.App"]
+ENTRYPOINT ["java", "-jar", "GroupProject-1.0-SNAPSHOT-jar-with-dependencies.jar"]
