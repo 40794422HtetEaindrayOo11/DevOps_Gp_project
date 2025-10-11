@@ -17,12 +17,15 @@ public class Country {
     private String headOfState;
     private Integer capital;
     private String code2;
+    private long totalPopulation;
+    private long cityPopulation;
+    private long nonCityPopulation;
 
     public Country(){
 
     }
 
-    public Country(String code, String name, String continent, String region, float surfaceArea, Integer indepYear, int population, Float lifeExpectancy, Float gnp, Float gnpOld, String localName, String governmentForm, String headOfState, Integer capital, String code2) {
+    public Country(String code, String name, String continent, String region, float surfaceArea, Integer indepYear, int population, Float lifeExpectancy, Float gnp, Float gnpOld, String localName, String governmentForm, String headOfState, Integer capital, String code2, long totalPopulation, long cityPopulation, long nonCityPopulation) {
         this.code = code;
         this.name = name;
         this.continent = continent;
@@ -38,6 +41,33 @@ public class Country {
         this.headOfState = headOfState;
         this.capital = capital;
         this.code2 = code2;
+        this.totalPopulation = totalPopulation;
+        this.cityPopulation = cityPopulation;
+        this.nonCityPopulation = nonCityPopulation;
+    }
+
+    public long getTotalPopulation() {
+        return totalPopulation;
+    }
+
+    public void setTotalPopulation(long totalPopulation) {
+        this.totalPopulation = totalPopulation;
+    }
+
+    public long getCityPopulation() {
+        return cityPopulation;
+    }
+
+    public void setCityPopulation(long cityPopulation) {
+        this.cityPopulation = cityPopulation;
+    }
+
+    public long getNonCityPopulation() {
+        return nonCityPopulation;
+    }
+
+    public void setNonCityPopulation(long nonCityPopulation) {
+        this.nonCityPopulation = nonCityPopulation;
     }
 
     public String getCode() {

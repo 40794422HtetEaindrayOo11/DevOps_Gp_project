@@ -1,14 +1,15 @@
 package com.napier.gp_project;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
 import java.sql.*;
+import java.util.ArrayList;
 
 public  class App {
 
     private static Connection con = null;
+
+    /**
+     * Establishes a connection with the database
+     */
     public void connect()
     {
         try
@@ -68,10 +69,15 @@ public  class App {
 
     public static void main(String[] args)
     {
+        App a = new App();
+        a.connect();
 
+        PopulationReport pr = new PopulationReport(con);
+        ArrayList<Country> countries = pr.getConCityPopulation() ;
 
+        pr.printConCityPopulation(countries);
 
-
+        a.disconnect();
     }
 
 }
