@@ -8,7 +8,7 @@ import java.sql.*;
 
 public  class App {
 
-    private static Connection con = null;
+    public static Connection con = null;
     public void connect()
     {
         try
@@ -70,6 +70,12 @@ public  class App {
     {
 
 
+        App app = new App();
+        app.connect();
+        Country_reports country_reports = new Country_reports();
+        Country_reports.con = app.con;
+        country_reports.getCountriesInWorld();
+        app.disconnect();
 
 
     }
