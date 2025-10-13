@@ -98,4 +98,88 @@ public class Country_reports {
         }
     }
 
+    /**
+     * Top N populated countries in the world.
+     */
+    public void getTopNPopulatedCountriesInWorld(int n) {
+        try {
+            String sql = "SELECT Name, Code, Continent, Region, Population " +
+                    "FROM country " +
+                    "ORDER BY Population DESC LIMIT ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, n);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<Country> countries = new ArrayList<>();
+
+            while (rset.next()) {
+                Country c = new Country();
+                c.setName(rset.getString("Name"));
+                c.setCode(rset.getString("Code"));
+                c.setContinent(rset.getString("Continent"));
+                c.setRegion(rset.getString("Region"));
+                c.setPopulation(rset.getInt("Population"));
+                countries.add(c);
+            }
+
+            System.out.println("\nTop " + n + " Populated Countries in the World");
+            System.out.printf("%-35s %-10s %-20s %-20s %15s%n",
+                    "Country Name", "Code", "Continent", "Region", "Population");
+
+            for (Country c : countries) {
+                System.out.printf("%-35s %-10s %-20s %-20s %,15d%n",
+                        c.getName(), c.getCode(), c.getContinent(), c.getRegion(), c.getPopulation());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error generating top N countries in world report: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Top N populated countries in a specific continent.
+     */
+    public void getTopNPopulatedCountriesInContinent(String continent, int n) {
+        try {
+            String sql = "SELECT Name, Code, Continent, Region, Population " +
+                    "FROM country " +
+                    "WHERE Continent = ? " +
+                    "ORDER BY Population DESC LIMIT ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, continent);
+            pstmt.setInt(2, n);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<Country> countries = new ArrayList<>();
+
+            while (rset.next()) {
+                Country c = new Country();
+                c.setName(rset.getString("Name"));
+                c.setCode(rset.getString("Code"));
+                c.setContinent(rset.getString("Continent"));
+                c.setRegion(rset.getString("Region"));
+                c.setPopulation(rset.getInt("Population"));
+                countries.add(c);
+            }
+
+            System.out.println("\nTop " + n + " Populated Countries in Continent: " + continent);
+            System.out.printf("%-35s %-10s %-20s %-20s %15s%n",
+                    "Country Name", "Code", "Continent", "Region", "Population");
+
+            for (Country c : countries) {
+                System.out.printf("%-35s %-10s %-20s %-20s %,15d%n",
+                        c.getName(), c.getCode(), c.getContinent(), c.getRegion(), c.getPopulation());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error generating top N countries in continent report: " + e.getMessage());
+        }
+    }
+
+
+
+
+
 }
