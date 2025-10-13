@@ -1,0 +1,91 @@
+package com.napier.gp_project;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class Capital_city_reports {
+
+    public static Connection con = null;
+
+    // All Capital Cities in the world
+    public void getAllCapitalCitiesInWorld() {
+        try {
+            String sql = "SELECT city.Name AS CapitalName, " +
+                    "country.Name AS CountryName, " +
+                    "city.Population AS Population " +
+                    "FROM city " +
+                    "JOIN country ON city.ID = country.Capital " +
+                    "ORDER BY city.Population DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<City> capitals = new ArrayList<>();
+
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("CapitalName"));
+                c.setCountryCode(rset.getString("CountryName"));
+                c.setPopulation(rset.getInt("Population"));
+                capitals.add(c);
+            }
+
+            System.out.println("\nAll Capital Cities in the World (Organised by Population - Largest to Smallest)");
+            System.out.printf("%-35s %-25s %15s%n", "Capital Name", "Country", "Population");
+
+            for (City c : capitals) {
+                System.out.printf("%-35s %-25s %,15d%n",
+                        c.getName(),
+                        c.getCountryCode(),
+                        c.getPopulation());
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error generating capital city report: " + e.getMessage());
+        }
+    }
+
+    public void getAllCapitalCitiesInContinent(String continent) {
+        try {
+            String sql = "SELECT city.Name AS CapitalName, " +
+                    "country.Name AS CountryName, " +
+                    "city.Population AS Population " +
+                    "FROM city " +
+                    "JOIN country ON city.ID = country.Capital " +
+                    "WHERE country.Continent = ? " +
+                    "ORDER BY city.Population DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, continent);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<City> capitals = new ArrayList<>();
+
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("CapitalName"));
+                c.setCountryCode(rset.getString("CountryName"));
+                c.setPopulation(rset.getInt("Population"));
+                capitals.add(c);
+            }
+
+            System.out.println("\nAll Capital Cities in " + continent + " (Organised by Population - Largest to Smallest)");
+            System.out.printf("%-35s %-25s %15s%n", "Capital Name", "Country", "Population");
+
+            for (City c : capitals) {
+                System.out.printf("%-35s %-25s %,15d%n",
+                        c.getName(),
+                        c.getCountryCode(),
+                        c.getPopulation());
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error generating capital city report for " + continent + ": " + e.getMessage());
+        }
+    }
+
+
+}
