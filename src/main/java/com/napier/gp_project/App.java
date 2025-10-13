@@ -68,16 +68,13 @@ public  class App {
 
     public static void main(String[] args)
     {
-
-
         App app = new App();
         app.connect();
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
         country_reports.getCountriesInWorld();
+        country_reports.getCountriesByRegion("Southeast Asia");
         app.disconnect();
-
-
     }
 
 }
