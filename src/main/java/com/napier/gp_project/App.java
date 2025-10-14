@@ -66,10 +66,10 @@ public class App {
         app.connect();
 
         CityReports cityReports = new CityReports();
-
         CityReports.con = app.con;
-
         cityReports.getCitiesInWorld();
+        cityReports.getCitiesByContinent("Asia");
+        cityReports.getCitiesByRegion("Middle East");
         cityReports.getTopNPopulatedCitiesInWorld(10);
 
         app.disconnect();
