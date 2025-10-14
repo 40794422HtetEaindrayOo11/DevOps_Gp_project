@@ -59,22 +59,18 @@ public class App {
     public static void main(String[] args) {
         App a = new App();
         a.connect();
-
-        // --- 1. Population by Continent/City ---
         PopulationReport pr = new PopulationReport(con);
+
+        // --- World Population ---
+        pr.getPopulationOfWorld();  // call the method directly using the same instance
+
+        // --- Continent Population ---
+        pr.getPopulationOfContinent();  //  NEW METHOD
+
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
         ArrayList<Country> countries = pr.getConCityPopulation();
-
-        // --- 2. World Population ---
-        pr.getPopulationOfWorld();  // ✅ call the method directly using the same instance
-
-        // --- 3. Print Continent-City Population Report ---
         pr.printConCityPopulation(countries);
 
-        // --- 3. Continent Population ---
-        pr.getPopulationOfContinent();  // ✅ NEW METHOD
-
-        // --- 4. Print Continent/City Report ---
-        pr.printConCityPopulation(countries);
         a.disconnect();
     }
 }

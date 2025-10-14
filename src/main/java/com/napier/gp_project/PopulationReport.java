@@ -62,6 +62,7 @@ public class PopulationReport {
      * Printing out the query result in a table format
      */
     public void printConCityPopulation(ArrayList<Country> countries) {
+        System.out.println("\nContinent population report of those who live in cities and those who don't");
         System.out.println(String.format("%-15s %-20s %-20s %-20s",
                 "Continent", "Total Population", "City Population", "Non City Population"));
 
@@ -70,6 +71,7 @@ public class PopulationReport {
                     c.getContinent(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
         }
     }
+
 
     /**
      * Fetch and print the population of the world
