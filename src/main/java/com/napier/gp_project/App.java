@@ -1,8 +1,10 @@
 package com.napier.gp_project;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import java.sql.*;
 
 public  class App {
 
@@ -24,24 +26,26 @@ public  class App {
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i) {
+        for (int i = 0; i < retries; ++i)
+        {
             System.out.println("Connecting to database...");
-            try {
-                // Wait a bit for the database to start
+            try
+            {
+                // Wait a bit for db to start
                 Thread.sleep(30000);
-
                 // Connect to database
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root", "example"
-                );
-                System.out.println("Successfully connected to the database!");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true", "root", "example");
+                System.out.println("Successfully connected");
                 break;
-            } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database, attempt " + i);
+            }
+            catch (SQLException sqle)
+            {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted during connection wait.");
+            }
+            catch (InterruptedException ie)
+            {
+                System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
@@ -53,32 +57,39 @@ public  class App {
         if (con != null) {
             try {
                 con.close();
-                System.out.println("Disconnected from the database.");
-            } catch (Exception e) {
-                System.out.println("Error closing database connection.");
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error closing connection to database");
             }
         }
     }
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         App app = new App();
         app.connect();
-
-
         Capital_city_reports capital_city_reports = new Capital_city_reports();
 
         Capital_city_reports.con = app.con;
         capital_city_reports.getAllCapitalCitiesInWorld();
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
 
+        Country_reports country_reports = new Country_reports();
+        Country_reports.con = app.con;
         CityReports cityReports = new CityReports();
         CityReports.con = app.con;
 
         cityReports.getCitiesInWorld();
         cityReports.getTopNPopulatedCitiesInWorld(10);
 
+        country_reports.getCountriesInWorld();
+        country_reports.getCountriesByRegion("Southeast Asia");
+        country_reports.getTopNPopulatedCountriesInWorld(10);
+        country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
         app.disconnect();
     }
+
+
 }
 
