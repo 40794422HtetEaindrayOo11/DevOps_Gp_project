@@ -8,20 +8,17 @@ import java.sql.*;
 
 public  class App {
 
-    /**
-     * Connection to MySQL database.
-     */
-    public static Connection con = null;
-
-    /**
-     * Connect to the MySQL database.
-     */
-    public void connect() {
-        try {
-            // Load MySQL driver
+    private static Connection con = null;
+    public void connect()
+    {
+        try
+        {
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver.");
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
@@ -53,9 +50,13 @@ public  class App {
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect() {
-        if (con != null) {
-            try {
+    public void disconnect()
+    {
+        if (con != null)
+        {
+            try
+            {
+                // Close connection
                 con.close();
             }
             catch (Exception e)
@@ -71,25 +72,33 @@ public  class App {
         app.connect();
         Capital_city_reports capital_city_reports = new Capital_city_reports();
 
+        PopulationReport pr = new PopulationReport(con);
         Capital_city_reports.con = app.con;
         capital_city_reports.getAllCapitalCitiesInWorld();
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
+        // --- World Population ---
+        pr.getPopulationOfWorld();  // call the method directly using the same instance
 
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
         CityReports cityReports = new CityReports();
         CityReports.con = app.con;
+        // --- Continent Population ---
+        pr.getPopulationOfContinent();  //  NEW METHOD
 
         cityReports.getCitiesInWorld();
         cityReports.getTopNPopulatedCitiesInWorld(10);
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        ArrayList<Country> countries = pr.getConCityPopulation();
+        pr.printConCityPopulation(countries);
 
         country_reports.getCountriesInWorld();
         country_reports.getCountriesByRegion("Southeast Asia");
         country_reports.getTopNPopulatedCountriesInWorld(10);
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
         app.disconnect();
+        a.disconnect();
     }
-
 
 }
 
