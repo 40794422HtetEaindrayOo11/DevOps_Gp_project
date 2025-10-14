@@ -1,10 +1,6 @@
 package com.napier.gp_project;
-
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
 import java.sql.*;
+import java.util.ArrayList;
 
 public  class App {
 
@@ -97,7 +93,7 @@ public  class App {
         country_reports.getTopNPopulatedCountriesInWorld(10);
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
         app.disconnect();
-        a.disconnect();
+
     }
 
 }
