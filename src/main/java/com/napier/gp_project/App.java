@@ -1,10 +1,7 @@
 package com.napier.gp_project;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
 import java.sql.*;
+import java.util.ArrayList;
 
 public  class App {
 
@@ -68,10 +65,35 @@ public  class App {
 
     public static void main(String[] args)
     {
+        App app = new App();
+        app.connect();
+        Capital_city_reports capital_city_reports = new Capital_city_reports();
 
+        PopulationReport pr = new PopulationReport(con);
+        Capital_city_reports.con = app.con;
+        capital_city_reports.getAllCapitalCitiesInWorld();
+        capital_city_reports.getAllCapitalCitiesInContinent("Asia");
+        // --- World Population ---
+        pr.getPopulationOfWorld();  // call the method directly using the same instance
 
+        Country_reports country_reports = new Country_reports();
+        Country_reports.con = app.con;
+        CityReports cityReports = new CityReports();
+        CityReports.con = app.con;
+        // --- Continent Population ---
+        pr.getPopulationOfContinent();  //  NEW METHOD
 
+        cityReports.getCitiesInWorld();
+        cityReports.getTopNPopulatedCitiesInWorld(10);
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        ArrayList<Country> countries = pr.getConCityPopulation();
+        pr.printConCityPopulation(countries);
 
+        country_reports.getCountriesInWorld();
+        country_reports.getCountriesByRegion("Southeast Asia");
+        country_reports.getTopNPopulatedCountriesInWorld(10);
+        country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
+        app.disconnect();
     }
 
 }
