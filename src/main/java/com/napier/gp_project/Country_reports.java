@@ -180,7 +180,7 @@ public class Country_reports {
     }
 
     /**
-     * Top N populated countries in a specific continent.
+     * Top N populated countries in a specific continent
      */
     public void getTopNPopulatedCountriesInContinent(String continent, int n) {
         try {
