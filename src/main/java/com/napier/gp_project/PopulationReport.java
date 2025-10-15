@@ -97,6 +97,7 @@ public class PopulationReport {
             System.out.println("Error generating world population report: " + e.getMessage());
         }
     }
+
     /**
      * Fetch and print the population of each continent
      */
@@ -128,4 +129,66 @@ public class PopulationReport {
         }
     }
 
+    /**
+     * Fetch and print the population of each region
+     */
+    public void getPopulationOfRegion() {
+        try {
+            String sql = "SELECT Region, SUM(Population) AS RegionPopulation " +
+                    "FROM country " +
+                    "GROUP BY Region " +
+                    "ORDER BY RegionPopulation DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rset = pstmt.executeQuery();
+
+            System.out.println("\nThe Population of Each Region");
+            System.out.printf("%-35s %15s%n", "Region", "Population");
+
+            while (rset.next()) {
+                String region = rset.getString("Region");
+                long population = rset.getLong("RegionPopulation");
+
+                System.out.printf("%-35s %,15d%n", region, population);
+            }
+
+            rset.close();
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error generating region population report: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Fetch and print the population of each country
+     */
+    public void getPopulationOfCountry() {
+        try {
+            String sql = "SELECT Name, Population, Continent, Region " +
+                    "FROM country " +
+                    "ORDER BY Population DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rset = pstmt.executeQuery();
+
+            System.out.println("\nThe Population of Each Country");
+            System.out.printf("%-35s %-20s %-25s %15s%n", "Country", "Continent", "Region", "Population");
+
+            while (rset.next()) {
+                String name = rset.getString("Name");
+                String continent = rset.getString("Continent");
+                String region = rset.getString("Region");
+                long population = rset.getLong("Population");
+
+                System.out.printf("%-35s %-20s %-25s %,15d%n", name, continent, region, population);
+            }
+
+            rset.close();
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error generating country population report: " + e.getMessage());
+        }
+    }
 }

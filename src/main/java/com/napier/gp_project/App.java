@@ -70,11 +70,15 @@ public class App {
         // --- 3. Print Continent-City Population Report ---
         pr.printConCityPopulation(countries);
 
-        // --- 3. Continent Population ---
-        pr.getPopulationOfContinent();  // ✅ NEW METHOD
+        // --- 4. Continent Population ---
+        pr.getPopulationOfContinent();  //
 
-        // --- 4. Print Continent/City Report ---
-        pr.printConCityPopulation(countries);
+        // --- 6. Region Population ---
+        pr.getPopulationOfRegion();   //
+
+        // --- 7. Population of each Country ---
+        pr.getPopulationOfCountry();   //
+
         a.disconnect();
     }
 }
