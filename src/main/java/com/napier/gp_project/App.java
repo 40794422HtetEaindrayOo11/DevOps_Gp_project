@@ -1,4 +1,9 @@
 package com.napier.gp_project;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -64,6 +69,8 @@ public  class App {
 
     public static void main(String[] args)
     {
+
+
         App app = new App();
         app.connect();
         Capital_city_reports capital_city_reports = new Capital_city_reports();
@@ -100,9 +107,12 @@ public  class App {
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
         country_reports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
 
+        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
+        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
         app.disconnect();
-    }
 
+
+    }
 
 }
 
