@@ -71,6 +71,14 @@ public class App {
         ArrayList<Country> countries = pr.getConCityPopulation();
         pr.printConCityPopulation(countries);
 
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        ArrayList<Country> regionCountries = pr.getRegionCityPopulation();
+        pr.printRegionCityPopulation(regionCountries);
+
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        ArrayList<Country> counCountry = pr.getCountryCityPopulation();
+        pr.printCountryCityPopulation(counCountry);
+
         a.disconnect();
     }
 }

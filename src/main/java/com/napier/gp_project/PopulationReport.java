@@ -72,6 +72,113 @@ public class PopulationReport {
         }
     }
 
+    public ArrayList<Country> getRegionCityPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT cn.Region, SUM(cn.Population) AS TOTAL_POPULATION, " +
+                            "SUM(ct.Population) AS CITY_POPULATION, " +
+                            "(SUM(cn.Population)-SUM(ct.Population)) AS NON_CITY_POPULATION " +
+                            "FROM country cn " +
+                            "LEFT JOIN (" +
+                            " SELECT CountryCode, SUM(Population) AS Population " +
+                            " FROM city " +
+                            " GROUP BY CountryCode " +
+                            ") ct ON cn.Code = ct.CountryCode " +
+                            "GROUP BY cn.Region " +
+                            "ORDER BY TOTAL_POPULATION DESC;";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<Country> countries = new ArrayList<>();
+
+            while (rset.next()) {
+                Country country = new Country();
+                country.setRegion(rset.getString("Region"));
+                country.setTotalPopulation(rset.getLong("TOTAL_POPULATION"));
+                country.setCityPopulation(rset.getLong("CITY_POPULATION"));
+                country.setNonCityPopulation(rset.getLong("NON_CITY_POPULATION"));
+                countries.add(country);
+            }
+
+            rset.close();
+            stmt.close();
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * Printing out the query result in a table format
+     */
+    public void printRegionCityPopulation(ArrayList<Country> countries) {
+        System.out.println("\nRegion population report of those who live in cities and those who don't");
+        System.out.println(String.format("%-27s %-20s %-20s %-20s",
+                "Region", "Total Population", "City Population", "Non City Population"));
+
+        for (Country c : countries) {
+            System.out.println(String.format("%-27s %-20s %-20s %-20s",
+                    c.getRegion(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
+        }
+    }
+
+    public ArrayList<Country> getCountryCityPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT cn.Name, SUM(cn.Population) AS TOTAL_POPULATION, " +
+                            "SUM(ct.Population) AS CITY_POPULATION, " +
+                            "(SUM(cn.Population)-SUM(ct.Population)) AS NON_CITY_POPULATION " +
+                            "FROM country cn " +
+                            "LEFT JOIN (" +
+                            " SELECT CountryCode, SUM(Population) AS Population " +
+                            " FROM city " +
+                            " GROUP BY CountryCode " +
+                            ") ct ON cn.Code = ct.CountryCode " +
+                            "GROUP BY cn.Name " +
+                            "ORDER BY TOTAL_POPULATION DESC;";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<Country> countries = new ArrayList<>();
+
+            while (rset.next()) {
+                Country country = new Country();
+                country.setName(rset.getString("Name"));
+                country.setTotalPopulation(rset.getLong("TOTAL_POPULATION"));
+                country.setCityPopulation(rset.getLong("CITY_POPULATION"));
+                country.setNonCityPopulation(rset.getLong("NON_CITY_POPULATION"));
+                countries.add(country);
+            }
+
+            rset.close();
+            stmt.close();
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * Printing out the query result in a table format
+     */
+    public void printCountryCityPopulation(ArrayList<Country> countries) {
+        System.out.println("\nCountry population report of those who live in cities and those who don't");
+        System.out.println(String.format("%-27s %-20s %-20s %-20s",
+                "Country", "Total Population", "City Population", "Non City Population"));
+
+        for (Country c : countries) {
+            System.out.println(String.format("%-27s %-20s %-20s %-20s",
+                    c.getName(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
+        }
+    }
 
     /**
      * Fetch and print the population of the world
