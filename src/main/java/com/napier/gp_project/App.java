@@ -73,9 +73,12 @@ public  class App {
         App app = new App();
         app.connect();
         Capital_city_reports capital_city_reports = new Capital_city_reports();
+
         Capital_city_reports.con = app.con;
         capital_city_reports.getAllCapitalCitiesInWorld();
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
+        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
+        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
         app.disconnect();
 
 
