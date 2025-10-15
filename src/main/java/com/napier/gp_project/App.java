@@ -71,6 +71,8 @@ public class App {
         cityReports.getCitiesByContinent("Asia");
         cityReports.getCitiesByRegion("Middle East");
         cityReports.getTopNPopulatedCitiesInWorld(10);
+        cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
+        cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
 
         app.disconnect();
     }
