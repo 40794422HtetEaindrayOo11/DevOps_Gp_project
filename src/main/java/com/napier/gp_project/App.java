@@ -58,40 +58,18 @@ public class App {
 
     public static void main(String[] args)
     {
-
-
         App app = new App();
         app.connect();
-        Capital_city_reports capital_city_reports = new Capital_city_reports();
 
-        PopulationReport pr = new PopulationReport(con);
+        Capital_city_reports capital_city_reports = new Capital_city_reports();
         Capital_city_reports.con = app.con;
         capital_city_reports.getAllCapitalCitiesInWorld();
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
-        // --- World Population ---
-        pr.getPopulationOfWorld();  // call the method directly using the same instance
+        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
+        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
 
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
-        CityReports cityReports = new CityReports();
-
-        CityReports.con = app.con;
-        // --- Continent Population ---
-        pr.getPopulationOfContinent();  //  NEW METHOD
-
-        cityReports.getCitiesInWorld();
-        cityReports.getCitiesByContinent("Asia");
-        cityReports.getCitiesByRegion("Middle East");
-        cityReports.getTopNPopulatedCitiesInWorld(10);
-        cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
-        cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
-        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
-        pr.getPopulationOfCountry();
-
-        // --- Population of the poeple who are living in cities and those who don't for Continent level ---
-        ArrayList<Country> countries = pr.getConCityPopulation();
-        pr.printConCityPopulation(countries);
-
         country_reports.getCountriesInWorld();
         country_reports.getCountriesByRegion("Southeast Asia");
         country_reports.getCountriesByContinent("Asia");
@@ -99,18 +77,33 @@ public class App {
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
         country_reports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
 
-        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
-        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
+        CityReports cityReports = new CityReports();
+        CityReports.con = app.con;
+        cityReports.getCitiesInWorld();
+        cityReports.getCitiesByContinent("Asia");
+        cityReports.getCitiesByRegion("Middle East");
+        cityReports.getTopNPopulatedCitiesInWorld(10);
+        cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
+        cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
 
 
-
+        PopulationReport pr = new PopulationReport(con);
+        // --- World Population ---
+        pr.getPopulationOfWorld();  // call the method directly using the same instance
+        // --- Continent Population ---
+        pr.getPopulationOfContinent();  //  NEW METHOD
+        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        pr.getPopulationOfCountry();
+        // --- Population of the poeple who are living in cities and those who don't for Continent level ---
+        ArrayList<Country> countries = pr.getConCityPopulation();
+        pr.printConCityPopulation(countries);
         // --- Population of the poeple who are living in cities and those who don't for Region level ---
         ArrayList<Country> regionCountries = pr.getRegionCityPopulation();
         pr.printRegionCityPopulation(regionCountries);
-
         // --- Population of the poeple who are living in cities and those who don't for Country level ---
         ArrayList<Country> counCountry = pr.getCountryCityPopulation();
         pr.printCountryCityPopulation(counCountry);
+
 
         app.disconnect();
     }
