@@ -78,6 +78,7 @@ public  class App {
         country_reports.getCountriesByContinent("Asia");
         country_reports.getTopNPopulatedCountriesInWorld(10);
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
+        country_reports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
 
         app.disconnect();
     }
