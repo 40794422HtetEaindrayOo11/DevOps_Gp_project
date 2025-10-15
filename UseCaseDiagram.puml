@@ -1,0 +1,139 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+  ArrowColor Black
+}
+
+left to right direction
+title World Database Report Use Case Diagram
+
+actor "Report Manager" as RM
+
+rectangle "World Database Report System" {
+
+  ' --- Countries Population Reports ---
+  package "Countries' Population Reports" {
+      usecase "check countries'\npopulation reports" as U0
+      usecase "check top n countries'\npopulation reports" as U01
+      usecase "Printout the report" as P0
+      usecase "Continent" as C0
+      usecase "Region" as R0
+      usecase "World" as W0
+
+      U0 -- P0
+      U01 -- P0
+      P0 ..> C0 : <<include>>
+      P0 ..> R0 : <<include>>
+      P0 ..> W0 : <<include>>
+  }
+
+  ' --- Cities Population Reports ---
+  package "Cities' Population Reports" {
+      usecase "check cities'\npopulation reports" as U1
+      usecase "check top n cities'\npopulation reports" as U11
+      usecase "Printout the report" as P1
+      usecase "World" as W1
+      usecase "Continent" as C1
+      usecase "Country" as CO1
+      usecase "District" as D1
+      usecase "Region" as R1
+
+      U1 -- P1
+      U11 -- P1
+      P1 ..> W1 : <<include>>
+      P1 ..> C1 : <<include>>
+      P1 ..> CO1 : <<include>>
+      P1 ..> D1 : <<include>>
+      P1 ..> R1 : <<include>>
+  }
+
+  ' --- Capital Cities Reports ---
+  package "Capital Cities' Population Reports" {
+      usecase "check capital city's\npopulation reports" as U2
+      usecase "check top n capital city's\npopulation reports" as U21
+      usecase "Printout the report" as P2
+      usecase "World" as W2
+      usecase "Region" as R2
+      usecase "Continent" as C2
+
+      U2 -- P2
+      U21 -- P2
+      P2 ..> W2 : <<include>>
+      P2 ..> R2 : <<include>>
+      P2 ..> C2 : <<include>>
+  }
+
+  ' --- City and Non-City Reports ---
+  package "City and Non-City Reports" {
+      usecase "check population of city\nand non-city reports" as U3
+      usecase "Printout the report" as P3
+      usecase "World" as W3
+      usecase "Region" as R3
+      usecase "Continent" as C3
+
+      U3 -- P3
+      P3 ..> W3 : <<include>>
+      P3 ..> R3 : <<include>>
+      P3 ..> C3 : <<include>>
+  }
+
+  ' --- Total Population Reports ---
+  package "Total Population Reports" {
+      usecase "check total\npopulation reports" as U4
+      usecase "Printout the report" as P4
+      usecase "World" as W4
+      usecase "City" as CT4
+      usecase "Country" as CO4
+      usecase "Region" as RG4
+      usecase "Continent" as CN4
+      usecase "District" as D4
+
+      U4 -- P4
+      P4 ..> W4 : <<include>>
+      P4 ..> CT4 : <<include>>
+      P4 ..> CO4 : <<include>>
+      P4 ..> RG4 : <<include>>
+      P4 ..> CN4 : <<include>>
+      P4 ..> D4 : <<include>>
+  }
+
+  ' --- Language Percentage Reports ---
+  package "Language Percentage Report" {
+      usecase "check language\npopulation reports" as U5
+      usecase "Printout the report" as P5
+      U5 --> P5
+  }
+}
+
+' --- Force database to the right ---
+rectangle "World Database" as DB
+
+' --- Invisible layout guide (forces DB to the right) ---
+RM -[hidden]-> DB
+
+' --- Actor connections ---
+RM -- U0
+RM -- U01
+RM -- U1
+RM -- U11
+RM -- U2
+RM -- U21
+RM -- U3
+RM -- U4
+RM -- U5
+
+' --- Database connections ---
+U0 -[#gray,dotted]- DB : <<use>>
+U1 -[#gray,dotted]- DB : <<use>>
+U2 -[#gray,dotted]- DB : <<use>>
+U01 -[#gray,dotted]- DB : <<use>>
+U11 -[#gray,dotted]- DB : <<use>>
+U21 -[#gray,dotted]- DB : <<use>>
+U3 -[#gray,dotted]- DB : <<use>>
+U4 -[#gray,dotted]- DB : <<use>>
+U5 -[#gray,dotted]- DB : <<use>>
+
+@enduml
