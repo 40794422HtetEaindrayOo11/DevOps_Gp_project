@@ -79,7 +79,6 @@ public class App {
         ArrayList<Country> counCountry = pr.getCountryCityPopulation();
         pr.printCountryCityPopulation(counCountry);
 
-
         a.disconnect();
     }
 }
