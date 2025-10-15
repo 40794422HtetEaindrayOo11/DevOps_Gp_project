@@ -73,12 +73,12 @@ public  class App {
 
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
-
-
         country_reports.getCountriesInWorld();
         country_reports.getCountriesByRegion("Southeast Asia");
+        country_reports.getCountriesByContinent("Asia");
         country_reports.getTopNPopulatedCountriesInWorld(10);
         country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
+
         app.disconnect();
     }
 
