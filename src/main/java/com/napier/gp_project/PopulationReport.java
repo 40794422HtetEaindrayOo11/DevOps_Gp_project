@@ -23,17 +23,21 @@ public class PopulationReport {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT cn.Continent, SUM(cn.Population) AS TOTAL_POPULATION, " +
-                            "SUM(ct.Population) AS CITY_POPULATION, " +
-                            "(SUM(cn.Population)-SUM(ct.Population)) AS NON_CITY_POPULATION " +
+                    "SELECT cn.Continent, " +
+                            "SUM(cn.Population) AS TOTAL_POPULATION, " +
+                            "SUM(IFNULL(ct.Population, 0)) AS CITY_POPULATION, " +
+                            "ROUND(SUM(IFNULL(ct.Population, 0)) * 100 / SUM(cn.Population), 2) AS CITY_PERCENTAGE, " +
+                            "(SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) AS NON_CITY_POPULATION, " +
+                            "ROUND((SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) * 100 / SUM(cn.Population), 2) AS NON_CITY_PERCENTAGE " +
                             "FROM country cn " +
-                            "LEFT JOIN (" +
-                            " SELECT CountryCode, SUM(Population) AS Population " +
-                            " FROM city " +
-                            " GROUP BY CountryCode " +
+                            "LEFT JOIN ( " +
+                            "   SELECT CountryCode, SUM(Population) AS Population " +
+                            "   FROM city " +
+                            "   GROUP BY CountryCode " +
                             ") ct ON cn.Code = ct.CountryCode " +
                             "GROUP BY cn.Continent " +
                             "ORDER BY TOTAL_POPULATION DESC;";
+
 
             ResultSet rset = stmt.executeQuery(strSelect);
             ArrayList<Country> countries = new ArrayList<>();
@@ -43,7 +47,9 @@ public class PopulationReport {
                 country.setContinent(rset.getString("Continent"));
                 country.setTotalPopulation(rset.getLong("TOTAL_POPULATION"));
                 country.setCityPopulation(rset.getLong("CITY_POPULATION"));
+                country.setCityPercentage(rset.getFloat("CITY_PERCENTAGE"));
                 country.setNonCityPopulation(rset.getLong("NON_CITY_POPULATION"));
+                country.setNonCityPercentage(rset.getFloat("NON_CITY_PERCENTAGE"));
                 countries.add(country);
             }
 
@@ -63,12 +69,14 @@ public class PopulationReport {
      */
     public void printConCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nContinent population report for those who live in cities and those who don't");
-        System.out.println(String.format("%-15s %-20s %-20s %-20s",
-                "Continent", "Total Population", "City Population", "Non City Population"));
+        System.out.println(String.format("%-15s %-20s %-20s %-20s %-20s %-20s",
+                "Continent", "Total Population", "City Population","City percentage",
+                "Non City Population", "Non City percentage"));
 
         for (Country c : countries) {
-            System.out.println(String.format("%-15s %-20s %-20s %-20s",
-                    c.getContinent(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
+            System.out.println(String.format("%-15s %-20s %-20s %-20s %-20s %-20s",
+                    c.getContinent(), c.getTotalPopulation(), c.getCityPopulation(), c.getCityPercentage(),
+                    c.getNonCityPopulation(), c.getNonCityPercentage()));
         }
     }
 
@@ -77,14 +85,17 @@ public class PopulationReport {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT cn.Region, SUM(cn.Population) AS TOTAL_POPULATION, " +
-                            "SUM(ct.Population) AS CITY_POPULATION, " +
-                            "(SUM(cn.Population)-SUM(ct.Population)) AS NON_CITY_POPULATION " +
+                    "SELECT cn.Region, " +
+                            "SUM(cn.Population) AS TOTAL_POPULATION, " +
+                            "SUM(IFNULL(ct.Population, 0)) AS CITY_POPULATION, " +
+                            "ROUND(SUM(IFNULL(ct.Population, 0)) * 100 / SUM(cn.Population), 2) AS CITY_PERCENTAGE, " +
+                            "(SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) AS NON_CITY_POPULATION, " +
+                            "ROUND((SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) * 100 / SUM(cn.Population), 2) AS NON_CITY_PERCENTAGE " +
                             "FROM country cn " +
-                            "LEFT JOIN (" +
-                            " SELECT CountryCode, SUM(Population) AS Population " +
-                            " FROM city " +
-                            " GROUP BY CountryCode " +
+                            "LEFT JOIN ( " +
+                            "   SELECT CountryCode, SUM(Population) AS Population " +
+                            "   FROM city " +
+                            "   GROUP BY CountryCode " +
                             ") ct ON cn.Code = ct.CountryCode " +
                             "GROUP BY cn.Region " +
                             "ORDER BY TOTAL_POPULATION DESC;";
@@ -97,7 +108,9 @@ public class PopulationReport {
                 country.setRegion(rset.getString("Region"));
                 country.setTotalPopulation(rset.getLong("TOTAL_POPULATION"));
                 country.setCityPopulation(rset.getLong("CITY_POPULATION"));
+                country.setCityPercentage(rset.getFloat("CITY_PERCENTAGE"));
                 country.setNonCityPopulation(rset.getLong("NON_CITY_POPULATION"));
+                country.setNonCityPercentage(rset.getFloat("NON_CITY_PERCENTAGE"));
                 countries.add(country);
             }
 
@@ -117,12 +130,14 @@ public class PopulationReport {
      */
     public void printRegionCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nRegion population report for those who live in cities and those who don't");
-        System.out.println(String.format("%-27s %-20s %-20s %-20s",
-                "Region", "Total Population", "City Population", "Non City Population"));
+        System.out.println(String.format("%-27s %-20s %-20s %-20s %-20s %-20s",
+                "Region", "Total Population", "City Population", "City Percentage",
+                "Non City Population", "Non City Percentage"));
 
         for (Country c : countries) {
-            System.out.println(String.format("%-27s %-20s %-20s %-20s",
-                    c.getRegion(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
+            System.out.println(String.format("%-27s %-20s %-20s %-20s %-20s %-20s",
+                    c.getRegion(), c.getTotalPopulation(), c.getCityPopulation(), c.getCityPercentage(),
+                    c.getNonCityPopulation(), c.getNonCityPercentage()));
         }
     }
 
@@ -131,17 +146,21 @@ public class PopulationReport {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT cn.Name, SUM(cn.Population) AS TOTAL_POPULATION, " +
-                            "SUM(ct.Population) AS CITY_POPULATION, " +
-                            "(SUM(cn.Population)-SUM(ct.Population)) AS NON_CITY_POPULATION " +
+                    "SELECT cn.Name, " +
+                            "SUM(cn.Population) AS TOTAL_POPULATION, " +
+                            "SUM(IFNULL(ct.Population, 0)) AS CITY_POPULATION, " +
+                            "ROUND(SUM(IFNULL(ct.Population, 0)) * 100 / SUM(cn.Population), 2) AS CITY_PERCENTAGE, " +
+                            "(SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) AS NON_CITY_POPULATION, " +
+                            "ROUND((SUM(cn.Population) - SUM(IFNULL(ct.Population, 0))) * 100 / SUM(cn.Population), 2) AS NON_CITY_PERCENTAGE " +
                             "FROM country cn " +
-                            "LEFT JOIN (" +
-                            " SELECT CountryCode, SUM(Population) AS Population " +
-                            " FROM city " +
-                            " GROUP BY CountryCode " +
+                            "LEFT JOIN ( " +
+                            "   SELECT CountryCode, SUM(Population) AS Population " +
+                            "   FROM city " +
+                            "   GROUP BY CountryCode " +
                             ") ct ON cn.Code = ct.CountryCode " +
                             "GROUP BY cn.Name " +
                             "ORDER BY TOTAL_POPULATION DESC;";
+
 
             ResultSet rset = stmt.executeQuery(strSelect);
             ArrayList<Country> countries = new ArrayList<>();
@@ -151,7 +170,9 @@ public class PopulationReport {
                 country.setName(rset.getString("Name"));
                 country.setTotalPopulation(rset.getLong("TOTAL_POPULATION"));
                 country.setCityPopulation(rset.getLong("CITY_POPULATION"));
+                country.setCityPercentage(rset.getFloat("CITY_PERCENTAGE"));
                 country.setNonCityPopulation(rset.getLong("NON_CITY_POPULATION"));
+                country.setNonCityPercentage(rset.getFloat("NON_CITY_PERCENTAGE"));
                 countries.add(country);
             }
 
@@ -171,12 +192,14 @@ public class PopulationReport {
      */
     public void printCountryCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nCountry population report for those who live in cities and those who don't");
-        System.out.println(String.format("%-27s %-20s %-20s %-20s",
-                "Country", "Total Population", "City Population", "Non City Population"));
+        System.out.println(String.format("%-27s %-20s %-20s %-20s %-20s %-20s",
+                "Country", "Total Population", "City Population","City Percentage",
+                "Non City Population","Non City Percentage"));
 
         for (Country c : countries) {
-            System.out.println(String.format("%-27s %-20s %-20s %-20s",
-                    c.getName(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
+            System.out.println(String.format("%-27s %-20s %-20s %-20s %-20s %-20s",
+                    c.getName(), c.getTotalPopulation(), c.getCityPopulation(), c.getCityPercentage(),
+                    c.getNonCityPopulation(), c.getNonCityPercentage()));
         }
     }
 
