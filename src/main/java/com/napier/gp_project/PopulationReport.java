@@ -324,6 +324,38 @@ public class PopulationReport {
         }
     }
 
+    /**
+     * Fetch and print the population of each city
+     */
+    public void getPopulationOfCity() {
+        try {
+            String sql = "SELECT city.Name AS Name, country.Name AS Country, District, city.Population AS Population " +
+                    "FROM city " +
+                    "JOIN country ON city.CountryCode = country.Code " +
+                    "ORDER BY city.Population DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rset = pstmt.executeQuery();
+
+            System.out.println("\nThe Population of Each City");
+            System.out.printf("%-35s %-35s %-20s %15s%n", "Name", "Country", "District", "Population");
+
+            while (rset.next()) {
+                String name = rset.getString("Name");
+                String country = rset.getString("Country");
+                String district = rset.getString("District");
+                long population = rset.getLong("Population");
+
+                System.out.printf("%-35s %-35s %-20s %,15d%n", name, country, district, population);
+            }
+
+            rset.close();
+            pstmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error generating city population report: " + e.getMessage());
+        }
+    }
 
 
 

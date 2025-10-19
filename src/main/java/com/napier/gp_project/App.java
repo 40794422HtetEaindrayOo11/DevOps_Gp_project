@@ -83,6 +83,11 @@ public class App {
         ArrayList<Country> counCountry = pr.getCountryCityPopulation();
         pr.printCountryCityPopulation(counCountry);
 
+        // --- Population of a city
+        pr.getPopulationOfCity();
+
+
+
         a.disconnect();
     }
 }
