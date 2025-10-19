@@ -79,6 +79,7 @@ public  class App {
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
         capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
+        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Asia",10);
         app.disconnect();
 
 
