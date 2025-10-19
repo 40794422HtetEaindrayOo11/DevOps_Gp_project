@@ -86,7 +86,8 @@ public class App {
         // --- Population of a city
         pr.getPopulationOfCity();
 
-
+        // --- Population of a district
+        pr.getPopulationOfDistrict();
 
         a.disconnect();
     }
