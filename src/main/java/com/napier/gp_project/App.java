@@ -73,6 +73,7 @@ public class App {
         cityReports.getTopNPopulatedCitiesInWorld(10);
         cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
+        cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
 
         app.disconnect();
     }
