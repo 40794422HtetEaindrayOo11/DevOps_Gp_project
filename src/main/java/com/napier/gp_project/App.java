@@ -74,6 +74,7 @@ public class App {
         cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
         cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
+        cityReports.getCitiesByCountry("Myanmar");
 
         app.disconnect();
     }
