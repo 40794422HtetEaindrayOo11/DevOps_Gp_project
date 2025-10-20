@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import java.sql.*;
+import java.util.ArrayList;
 
 public  class App {
 
@@ -68,10 +69,15 @@ public  class App {
 
     public static void main(String[] args)
     {
+        App app = new App();
+        app.connect();
+        LanguageReport lr = new LanguageReport(con);
 
 
+        ArrayList<CountryLanguage> countryLanguages = lr.getLanguageReport();
+        lr.printLanguageReport(countryLanguages);
 
-
+        app.disconnect();
     }
 
 }
