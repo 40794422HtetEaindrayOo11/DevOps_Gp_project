@@ -347,5 +347,46 @@ public class CityReports {
         }
     }
 
+    /**
+
+     All the cities in a district organized by largest population to smallest.
+     @param districtName*/
+    public void getCitiesByDistrict(String districtName) {
+        try {
+            String sql = "SELECT city.Name AS CityName, " +"country.Name AS CountryName, "
+                    +"city.District, " +"city.Population "
+                    +"FROM city " +"JOIN country ON city.CountryCode = country.Code "
+                    +"WHERE city.District = ? " +"ORDER BY city.Population DESC";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, districtName);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // Collect data into City objects
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("CityName"));
+                c.setCountryCode(rset.getString("CountryName"));
+                c.setDistrict(rset.getString("District"));
+                c.setPopulation(rset.getInt("Population"));
+                cities.add(c);
+            }
+
+            System.out.println("All Cities in District - " + districtName + " (Organised by Population - largest to smallest)");
+            System.out.printf("%-35s %-25s %-25s %15s%n",
+                    "City Name", "Country", "District", "Population");
+
+            for (City c : cities) {
+                System.out.printf("%-35s %-25s %-25s %,15d%n",
+                        c.getName(), c.getCountryCode(), c.getDistrict(), c.getPopulation());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error generating city report by district: " + e.getMessage());
+        }
+    }
+
 
 }

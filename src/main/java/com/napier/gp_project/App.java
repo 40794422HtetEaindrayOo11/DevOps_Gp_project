@@ -75,6 +75,7 @@ public class App {
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
         cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
         cityReports.getCitiesByCountry("Myanmar");
+        cityReports.getCitiesByDistrict("Kabol");
 
         app.disconnect();
     }
