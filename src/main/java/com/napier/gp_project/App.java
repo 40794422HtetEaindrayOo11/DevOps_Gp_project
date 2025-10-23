@@ -76,7 +76,7 @@ public class App {
         cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
         cityReports.getCitiesByCountry("Myanmar");
         cityReports.getCitiesByDistrict("Kabol");
-
+        cityReports.getTopNPopulatedCitiesInCountry("Myanmar", 5);
         app.disconnect();
     }
 }

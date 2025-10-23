@@ -388,5 +388,49 @@ public class CityReports {
         }
     }
 
+    /**
+     * The top N populated cities in a country where N is provided by the user.
+     * @param countryName The name of the country.
+     * @param n The number of top populated cities to display.
+     */
+    public void getTopNPopulatedCitiesInCountry(String countryName, int n) {
+        try {
+            String sql = "SELECT city.Name AS CityName, country.Name AS CountryName, " +
+                    "city.District, city.Population " +
+                    "FROM city " +
+                    "JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Name = ? " +
+                    "ORDER BY city.Population DESC LIMIT ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, countryName);
+            pstmt.setInt(2, n);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("CityName"));
+                c.setCountryCode(rset.getString("CountryName"));
+                c.setDistrict(rset.getString("District"));
+                c.setPopulation(rset.getInt("Population"));
+                cities.add(c);
+            }
+
+            System.out.println("\nTop " + n + " Populated Cities in the Country: " + countryName);
+            System.out.printf("%-35s %-25s %-20s %15s%n",
+                    "City Name", "Country", "District", "Population");
+
+            for (City c : cities) {
+                System.out.printf("%-35s %-25s %-20s %,15d%n",
+                        c.getName(), c.getCountryCode(), c.getDistrict(), c.getPopulation());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error generating top N populated cities in country report: " + e.getMessage());
+        }
+    }
+
 
 }
