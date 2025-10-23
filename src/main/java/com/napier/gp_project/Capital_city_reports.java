@@ -165,7 +165,6 @@ public class Capital_city_reports {
             System.out.println("Error generating top N capital city report: " + e.getMessage());}
      }
 
-
     // Top N populated cities in a continent
     public void getTopNPopulatedCapitalCitiesInContinent(String continent, int n) {
         try {
@@ -209,4 +208,45 @@ public class Capital_city_reports {
         catch (SQLException e) {
             System.out.println("Error generating top N capital city in " + continent + "report: " + e.getMessage());}
     }
+    public void getTopNPopulatedCapitalCitiesInRegion(int n, String region) {
+        try {
+            String sql = "SELECT city.Name AS CapitalName, " +
+                    "country.Name AS CountryName, " +
+                    "city.Population AS Population " +
+                    "FROM city " +
+                    "JOIN country ON city.ID = country.Capital " +
+                    "WHERE country.Region = ? " +
+                    "ORDER BY city.Population DESC " +
+                    "LIMIT ?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, region);
+            pstmt.setInt(2, n);
+            ResultSet rset = pstmt.executeQuery();
+
+            ArrayList<City> capitals = new ArrayList<>();
+
+            while (rset.next()) {
+                City c = new City();
+                c.setName(rset.getString("CapitalName"));
+                c.setCountryCode(rset.getString("CountryName"));
+                c.setPopulation(rset.getInt("Population"));
+                capitals.add(c);
+            }
+
+            System.out.println("\nTop " + n + " Populated Capital Cities in " + region + " (Largest to Smallest)");
+            System.out.printf("%-35s %-25s %15s%n", "Capital Name", "Country", "Population");
+
+            for (City c : capitals) {
+                System.out.printf("%-35s %-25s %,15d%n",
+                        c.getName(),
+                        c.getCountryCode(),
+                        c.getPopulation());
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error generating top N capital city report for " + region + ": " + e.getMessage());
+        }
+    }
+
 }
