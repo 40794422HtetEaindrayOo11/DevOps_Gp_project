@@ -7,42 +7,44 @@ import org.bson.Document;
 import java.sql.*;
 import java.util.ArrayList;
 
-public  class App {
-
-    private static Connection con = null;
+public class App {
 
     /**
-     * Establishes a connection with the database
+     * Connection to MySQL database.
+     */
+    public static Connection con = null;
+
+    /**
+     * Connect to the MySQL database.
      */
     public void connect() {
         try {
-            // Load Database driver
+            // Load MySQL driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
+            System.out.println("Could not load SQL driver.");
             System.exit(-1);
         }
 
         int retries = 10;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
-                // Wait a bit for db to start
+            try {
+                // Wait a bit for the database to start
                 Thread.sleep(30000);
+
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true", "root", "example");
-                System.out.println("Successfully connected");
+                con = DriverManager.getConnection(
+                        "jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
+                        "root", "example"
+                );
+                System.out.println("Successfully connected to the database!");
                 break;
-            }
-            catch (SQLException sqle)
-            {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+            } catch (SQLException sqle) {
+                System.out.println("Failed to connect to database, attempt " + i);
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
-                System.out.println("Thread interrupted? Should not happen.");
+            } catch (InterruptedException ie) {
+                System.out.println("Thread interrupted during connection wait.");
             }
         }
     }
@@ -54,17 +56,15 @@ public  class App {
         if (con != null) {
             try {
                 con.close();
-                System.out.println("Disconnected from database.");
+                System.out.println("Disconnected from the database.");
             } catch (Exception e) {
-                System.out.println("Error closing connection to database");
+                System.out.println("Error closing database connection.");
             }
         }
     }
 
-    public static void main(String[] args)
-    {
 
-
+    public static void main(String[] args) {
         App app = new App();
         app.connect();
 
@@ -94,6 +94,10 @@ public  class App {
         cityReports.getTopNPopulatedCitiesInWorld(10);
         cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
+        cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
+        cityReports.getCitiesByCountry("Myanmar");
+        cityReports.getCitiesByDistrict("Kabol");
+        cityReports.getTopNPopulatedCitiesInCountry("Myanmar", 5);
 
         LanguageReport lr = new LanguageReport(con);
         ArrayList<CountryLanguage> countryLanguages = lr.getLanguageReport();
@@ -121,9 +125,5 @@ public  class App {
         pr.getPopulationOfDistrict();
 
         app.disconnect();
-
-
     }
-
 }
-
