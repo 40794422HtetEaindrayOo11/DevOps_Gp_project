@@ -1,5 +1,10 @@
 package com.napier.gp_project;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -67,6 +72,8 @@ public class App {
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
         capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
+        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Asia",10);
+        capital_city_reports.getTopNPopulatedCapitalCitiesInRegion(5,"Western Europe");
 
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
@@ -85,14 +92,21 @@ public class App {
         cityReports.getTopNPopulatedCitiesInWorld(10);
         cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
+        cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
+        cityReports.getCitiesByCountry("Myanmar");
+        cityReports.getCitiesByDistrict("Kabol");
+        cityReports.getTopNPopulatedCitiesInCountry("Myanmar", 5);
 
+        LanguageReport lr = new LanguageReport(con);
+        ArrayList<CountryLanguage> countryLanguages = lr.getLanguageReport();
+        lr.printLanguageReport(countryLanguages);
 
         PopulationReport pr = new PopulationReport(con);
         // --- World Population ---
-        pr.getPopulationOfWorld();  // call the method directly using the same instance
+        pr.getPopulationOfWorld();
         // --- Continent Population ---
-        pr.getPopulationOfContinent();  //  NEW METHOD
-        // --- Population of the poeple who are living in cities and thos who don't for Continent level ---
+        pr.getPopulationOfContinent();
+        pr.getPopulationOfRegion();
         pr.getPopulationOfCountry();
         // --- Population of the poeple who are living in cities and those who don't for Continent level ---
         ArrayList<Country> countries = pr.getConCityPopulation();
@@ -103,7 +117,10 @@ public class App {
         // --- Population of the poeple who are living in cities and those who don't for Country level ---
         ArrayList<Country> counCountry = pr.getCountryCityPopulation();
         pr.printCountryCityPopulation(counCountry);
-
+        // --- Population of a city
+        pr.getPopulationOfCity();
+        // --- Population of a district
+        pr.getPopulationOfDistrict();
 
         app.disconnect();
     }

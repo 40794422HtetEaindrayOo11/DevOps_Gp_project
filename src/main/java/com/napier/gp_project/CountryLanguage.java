@@ -5,16 +5,26 @@ public class CountryLanguage {
     private String language;
     private boolean isOfficial;
     private float percentage;
+    private long population;
 
     public CountryLanguage(){
 
     }
 
-    public CountryLanguage(String countryCode, String language, boolean isOfficial, float percentage) {
+    public CountryLanguage(String countryCode, String language, boolean isOfficial, float percentage, long population) {
         this.countryCode = countryCode;
         this.language = language;
         this.isOfficial = isOfficial;
         this.percentage = percentage;
+        this.population = population;
+    }
+
+    public long getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(long population) {
+        this.population = population;
     }
 
     public String getCountryCode() {
