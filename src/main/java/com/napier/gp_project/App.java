@@ -4,25 +4,23 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class App {
 
-    /**
-     * Connection to MySQL database.
-     */
-    public static Connection con = null;
+    private static Connection con = null;
 
     /**
-     * Connect to the MySQL database.
+     * Establishes a connection with the database
      */
     public void connect() {
         try {
-            // Load MySQL driver
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver.");
+            System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
@@ -30,21 +28,21 @@ public class App {
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
-                // Wait a bit for the database to start
+                // Wait a bit for db to start
                 Thread.sleep(30000);
-
                 // Connect to database
                 con = DriverManager.getConnection(
                         "jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root", "example"
+                        "root",
+                        "example"
                 );
-                System.out.println("Successfully connected to the database!");
+                System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database, attempt " + i);
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted during connection wait.");
+                System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
@@ -56,15 +54,15 @@ public class App {
         if (con != null) {
             try {
                 con.close();
-                System.out.println("Disconnected from the database.");
+                System.out.println("Disconnected from database.");
             } catch (Exception e) {
-                System.out.println("Error closing database connection.");
+                System.out.println("Error closing connection to database");
             }
         }
     }
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         App app = new App();
         app.connect();
 
