@@ -63,6 +63,8 @@ public  class App {
 
     public static void main(String[] args)
     {
+
+
         App app = new App();
         app.connect();
 
@@ -72,6 +74,8 @@ public  class App {
         capital_city_reports.getAllCapitalCitiesInContinent("Asia");
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
         capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
+        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Asia",10);
+        capital_city_reports.getTopNPopulatedCapitalCitiesInRegion(5,"Western Europe");
 
         Country_reports country_reports = new Country_reports();
         Country_reports.con = app.con;
@@ -117,5 +121,9 @@ public  class App {
         pr.getPopulationOfDistrict();
 
         app.disconnect();
+
+
     }
+
 }
+
