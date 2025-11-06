@@ -20,12 +20,14 @@ public class Country {
     private long totalPopulation;
     private long cityPopulation;
     private long nonCityPopulation;
+    private float cityPercentage;
+    private float nonCityPercentage;
 
     public Country(){
 
     }
 
-    public Country(String code, String name, String continent, String region, float surfaceArea, Integer indepYear, int population, Float lifeExpectancy, Float gnp, Float gnpOld, String localName, String governmentForm, String headOfState, Integer capital, String code2, long totalPopulation, long cityPopulation, long nonCityPopulation) {
+    public Country(String code, String name, String continent, String region, float surfaceArea, Integer indepYear, int population, Float lifeExpectancy, Float gnp, Float gnpOld, String localName, String governmentForm, String headOfState, Integer capital, String code2, long totalPopulation, long cityPopulation, long nonCityPopulation, float cityPercentage, float nonCityPercentage) {
         this.code = code;
         this.name = name;
         this.continent = continent;
@@ -44,6 +46,24 @@ public class Country {
         this.totalPopulation = totalPopulation;
         this.cityPopulation = cityPopulation;
         this.nonCityPopulation = nonCityPopulation;
+        this.cityPercentage = cityPercentage;
+        this.nonCityPercentage = nonCityPercentage;
+    }
+
+    public float getCityPercentage() {
+        return cityPercentage;
+    }
+
+    public void setCityPercentage(float cityPercentage) {
+        this.cityPercentage = cityPercentage;
+    }
+
+    public float getNonCityPercentage() {
+        return nonCityPercentage;
+    }
+
+    public void setNonCityPercentage(float nonCityPercentage) {
+        this.nonCityPercentage = nonCityPercentage;
     }
 
     public long getTotalPopulation() {
