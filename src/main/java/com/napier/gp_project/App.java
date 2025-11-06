@@ -1,9 +1,13 @@
 package com.napier.gp_project;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class App {
+public  class App {
 
     private static Connection con = null;
 
@@ -22,21 +26,22 @@ public class App {
         int retries = 10;
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try {
+            try
+            {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root",
-                        "example"
-                );
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true", "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
+            }
+            catch (SQLException sqle)
+            {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
+            }
+            catch (InterruptedException ie)
+            {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -86,34 +91,28 @@ public class App {
         cityReports.getTopNPopulatedCitiesInRegion("Southeast Asia", 5);
         cityReports.getTopNPopulatedCitiesInContinent("Asia", 5);
 
+        LanguageReport lr = new LanguageReport(con);
+        ArrayList<CountryLanguage> countryLanguages = lr.getLanguageReport();
+        lr.printLanguageReport(countryLanguages);
 
         PopulationReport pr = new PopulationReport(con);
-
         // --- World Population ---
         pr.getPopulationOfWorld();
-
         // --- Continent Population ---
         pr.getPopulationOfContinent();
-
         pr.getPopulationOfRegion();
-
         pr.getPopulationOfCountry();
-
         // --- Population of the poeple who are living in cities and those who don't for Continent level ---
         ArrayList<Country> countries = pr.getConCityPopulation();
         pr.printConCityPopulation(countries);
-
         // --- Population of the poeple who are living in cities and those who don't for Region level ---
         ArrayList<Country> regionCountries = pr.getRegionCityPopulation();
         pr.printRegionCityPopulation(regionCountries);
-
         // --- Population of the poeple who are living in cities and those who don't for Country level ---
         ArrayList<Country> counCountry = pr.getCountryCityPopulation();
         pr.printCountryCityPopulation(counCountry);
-
         // --- Population of a city
         pr.getPopulationOfCity();
-
         // --- Population of a district
         pr.getPopulationOfDistrict();
 
