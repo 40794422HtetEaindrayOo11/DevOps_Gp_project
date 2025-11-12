@@ -8,12 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PopulationReport {
-    private Connection con;  // store the connection
-
-    // Constructor that accepts the connection
-    public PopulationReport(Connection con) {
-        this.con = con;
-    }
+    public static Connection con = null;  // store the connection
 
     /**
      * Fetching the required data from database
@@ -62,11 +57,19 @@ public class PopulationReport {
      * Printing out the query result in a table format
      */
     public void printConCityPopulation(ArrayList<Country> countries) {
+
+
+
         System.out.println("\nContinent population report for those who live in cities and those who don't");
+        if (countries == null) {
+            System.out.println("Country List is null");
+        }
         System.out.println(String.format("%-15s %-20s %-20s %-20s",
                 "Continent", "Total Population", "City Population", "Non City Population"));
 
+
         for (Country c : countries) {
+            if (c == null) continue;
             System.out.println(String.format("%-15s %-20s %-20s %-20s",
                     c.getContinent(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
         }
@@ -117,10 +120,14 @@ public class PopulationReport {
      */
     public void printRegionCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nRegion population report for those who live in cities and those who don't");
+        if (countries == null) {
+            System.out.println("Country List is null");
+        }
         System.out.println(String.format("%-27s %-20s %-20s %-20s",
                 "Region", "Total Population", "City Population", "Non City Population"));
 
         for (Country c : countries) {
+            if (c == null) continue;
             System.out.println(String.format("%-27s %-20s %-20s %-20s",
                     c.getRegion(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
         }
@@ -171,10 +178,14 @@ public class PopulationReport {
      */
     public void printCountryCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nCountry population report for those who live in cities and those who don't");
+        if  (countries == null) {
+            System.out.println("Country List is null");
+        }
         System.out.println(String.format("%-27s %-20s %-20s %-20s",
                 "Country", "Total Population", "City Population", "Non City Population"));
 
         for (Country c : countries) {
+            if (c == null) continue;
             System.out.println(String.format("%-27s %-20s %-20s %-20s",
                     c.getName(), c.getTotalPopulation(), c.getCityPopulation(), c.getNonCityPopulation()));
         }

@@ -1,9 +1,9 @@
-name: A workflow for my Hello World App
+name: A workflow for DevOps Group Project
 on: push
 
 jobs:
   build:
-    name: Hello world action
+    name: DevOps Group Project Activity
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -14,9 +14,11 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '18'
-          distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn package
-      - name: Run docker compose
-        run: docker compose up --abort-on-container-exit
+          distribution: 'temurin'
+      - name: Unit Tests
+        run: mvn -Dtest=com.napier.gp_project.AppTest test
+      - name: Package and Run docker compose
+        run: |
+          mvn package -DskipTests
+          docker compose up --abort-on-container-exit
 
