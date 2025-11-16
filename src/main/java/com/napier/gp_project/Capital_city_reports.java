@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Capital_city_reports {
-
+    public ResultSet rset;
     public static Connection con = null;
 
     // All Capital Cities in the world
@@ -21,7 +21,7 @@ public class Capital_city_reports {
                     "ORDER BY city.Population DESC";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
-            ResultSet rset = pstmt.executeQuery();
+            rset = pstmt.executeQuery();
 
             ArrayList<City> capitals = new ArrayList<>();
 
@@ -126,7 +126,7 @@ public class Capital_city_reports {
             System.out.println("Error generating capital city report for " + region + ": " + e.getMessage());
         }
     }
-// Top N populated cities in the world
+    // Top N populated cities in the world
     public void getTopNPopulatedCapitalCitiesInWorld(int n) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
