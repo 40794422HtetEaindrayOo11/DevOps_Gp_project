@@ -57,6 +57,10 @@ public class App {
         }
     }
 
+    public Connection getConnection() {
+        return con;
+    }
+
     public static void main(String[] args)
     {
         App app = new App();
