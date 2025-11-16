@@ -10,7 +10,7 @@ public class App {
     /**
      * Establishes a connection with the database
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,7 +27,8 @@ public class App {
                 Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/world?useSSL=false&allowPublicKeyRetrieval=true",
+                        "jdbc:mysql://" + location
+                                + "/world?useSSL=false&allowPublicKeyRetrieval=true",
                         "root",
                         "example"
                 );
@@ -59,7 +60,13 @@ public class App {
     public static void main(String[] args)
     {
         App app = new App();
-        app.connect();
+        if(args.length < 1){
+            app.connect("localhost:33060", 30000);
+        }else{
+            app.connect(args[0], Integer.parseInt(args[1]));
+        }
+
+
 
         Capital_city_reports capital_city_reports = new Capital_city_reports();
         Capital_city_reports.con = app.con;
