@@ -21,10 +21,28 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void getAllCapitalCitiesInWorld()
+    void getAllCapitalCitiesInWorldTest()
     {
         capital_city_reports.con = app.getConnection();
         capital_city_reports = new Capital_city_reports();
         capital_city_reports.getAllCapitalCitiesInWorld();
     }
+
+    @Test
+    void getAllCapitalCitiesInContinentTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getAllCapitalCitiesInContinent("Asia");
+    }
+
+    @Test
+    void getAllCapitalCitiesInRegionTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
+    }
 }
+
+
