@@ -17,6 +17,13 @@ jobs:
           distribution: 'temurin'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.gp_project.AppTest test
+      - name: CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./target/site/jacoco
+          flags: Unit Tests
+          verbose: true
 
   IntegrationTests:
     name: Integration Tests
@@ -42,6 +49,7 @@ jobs:
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./target/site/jacoco
           flags: Integration Tests
           verbose: true
