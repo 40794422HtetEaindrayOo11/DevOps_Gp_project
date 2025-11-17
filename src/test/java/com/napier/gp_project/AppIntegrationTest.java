@@ -43,6 +43,31 @@ public class AppIntegrationTest {
         capital_city_reports = new Capital_city_reports();
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
     }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInWorldTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(10);
+    }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInContinentTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Africa",10);
+    }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInRegionTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInRegion(5,"Caribbean");
+    }
+
 }
 
 
