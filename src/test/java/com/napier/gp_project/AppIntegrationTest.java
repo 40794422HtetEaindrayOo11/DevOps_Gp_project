@@ -11,7 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppIntegrationTest {
     static App app;
     Capital_city_reports capital_city_reports;
+    Country_reports country_reports;
     CityReports cityReports;
+
     @BeforeAll
     static void init()
     {
@@ -100,6 +102,54 @@ public class AppIntegrationTest {
 
 
 
+
+    @Test
+    void getCountriesInWorldTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getCountriesInWorld();
+    }
+
+    @Test
+    void getCountriesByRegionTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getCountriesByRegion("Southeast Asia");
+    }
+
+    @Test
+    void getCountriesByContinentTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getCountriesByContinent("Asia");
+    }
+
+    @Test
+    void getTopNPopulatedCountriesInWorldTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getTopNPopulatedCountriesInWorld(10);
+    }
+
+    @Test
+    void getTopNPopulatedCountriesInContinentTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
+    }
+
+    @Test
+    void getTopNPopulatedCountriesInRegionTest()
+    {
+        country_reports = new Country_reports();
+        Country_reports.con = app.getConnection();
+        country_reports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
+    }
 }
 
 
