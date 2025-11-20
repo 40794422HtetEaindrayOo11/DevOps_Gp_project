@@ -51,8 +51,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./target/site/jacoco
+          files: target/site/jacoco/jacoco.xml
           flags: Integration Tests
           verbose: true
+
+      - name: Print coverage XML size
+        run: ls -lh target/site/jacoco/jacoco.xml
   build:
     name: Build and Start Using docker-compose
     runs-on: ubuntu-22.04
