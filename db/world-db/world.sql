@@ -25,8 +25,10 @@ SET @old_autocommit=@@autocommit;
 CREATE DATABASE `world` DEFAULT CHARACTER SET utf8mb4;
 
 USE `world`;
+CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'example';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 
---
 -- Table structure for table `city`
 --
 

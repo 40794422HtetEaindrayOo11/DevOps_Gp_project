@@ -11,3 +11,4 @@ COPY world-db/*.dump /tmp/
 COPY world-db/world.sql /docker-entrypoint-initdb.d
 # Set the root password
 ENV MYSQL_ROOT_PASSWORD example
+# Add remote access grant script (executed on container startup)

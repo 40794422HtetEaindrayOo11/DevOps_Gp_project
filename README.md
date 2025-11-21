@@ -24,7 +24,7 @@ This project is a **Scrum-based group project** that generates reports on **coun
 | Kaung Htet San   | Developer      |
 | Aung Khant Kyaw  | Developer      |
 | Khant Wai Yan    | Developer      |
-
+| Htoo Htet Aung   | Developer      |
 ---
 
 ## Reports
@@ -57,6 +57,7 @@ This project is a **Scrum-based group project** that generates reports on **coun
 ![Pull Requests](https://img.shields.io/github/issues-pr/40794422HtetEaindrayOo11/DevOps_Gp_project)
 ![Last Commit](https://img.shields.io/github/last-commit/40794422HtetEaindrayOo11/DevOps_Gp_project)
 ![Contributors](https://img.shields.io/github/contributors/40794422HtetEaindrayOo11/DevOps_Gp_project)
+!
 
 
 ---
