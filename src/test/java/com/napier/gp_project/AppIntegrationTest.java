@@ -43,6 +43,9 @@ public class AppIntegrationTest {
         capital_city_reports = new Capital_city_reports();
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
     }
+    // cuty
+
+
     @Test
     void getCitiesInWorldTest() {
         cityReports.con = app.getConnection();
@@ -96,6 +99,12 @@ public class AppIntegrationTest {
         cityReports.con = app.getConnection();
         cityReports = new CityReports();
         cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
+    }
+    @Test
+    void getTopNPopulatedCitiesInCountry() {
+        cityReports.con = app.getConnection();
+        cityReports = new CityReports();
+        cityReports.getTopNPopulatedCitiesInCountry("Myanmar",5);
     }
 }
 
