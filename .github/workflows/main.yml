@@ -17,14 +17,15 @@ jobs:
           distribution: 'temurin'
 
       - name: Unit Tests
-        run: mvn -B -DskipITs clean test jacoco:report
-      - name: CodeCov
+        run: mvn -Dtest=com.napier.gp_project.AppTest test jacoco:report
+      - name: Upload Coverage
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
-          flags: Unit Tests
+          flags: unit
           verbose: true
+
 
   IntegrationTests:
     name: Integration Tests
@@ -48,11 +49,11 @@ jobs:
           docker rm world
           docker image rm database
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
-          flags: Integration Tests
+          flags: integration
           verbose: true
   build:
     name: Build and Start Using docker-compose
