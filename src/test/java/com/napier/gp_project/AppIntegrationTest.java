@@ -101,7 +101,6 @@ public class AppIntegrationTest {
         report.con = app.getConnection();
 
         ArrayList<Country> result = report.getConCityPopulation();
-
         assertNotNull(result);
         assertFalse(result.isEmpty());
 
