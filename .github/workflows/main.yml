@@ -17,7 +17,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.gp_project.AppTest test
+        run: mvn -B -DskipITs clean test jacoco:report
       - name: CodeCov
         uses: codecov/codecov-action@v5
         with:
@@ -43,7 +43,7 @@ jobs:
         run: |
           docker build -t database ./db 
           docker run --name world -dp 33060:3306 database
-          mvn test
+          mvn -B clean test jacoco:report
           docker stop world
           docker rm world
           docker image rm database
