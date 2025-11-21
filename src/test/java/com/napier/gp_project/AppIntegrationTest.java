@@ -96,53 +96,78 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void getConCityPopulation() {
-        population_report.con = app.getConnection();
-        population_report = new PopulationReport();
-        ArrayList<Country> countries = population_report.getConCityPopulation();
-        population_report.printConCityPopulation(countries);
+    void testGetConCityPopulation() {
+        PopulationReport report = new PopulationReport();
+        report.con = app.getConnection();
+
+        ArrayList<Country> result = report.getConCityPopulation();
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+
+        Country asia = result.stream()
+                .filter(c -> "Asia".equals(c.getContinent()))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(asia);
+        assertTrue(asia.getTotalPopulation() > 0);
     }
+
 
     @Test
     void testPrintConCityPopulation() {
-        population_report.con = app.getConnection();
         ArrayList<Country> mock = new ArrayList<>();
         Country c = new Country();
         c.setContinent("Asia");
-        c.setTotalPopulation(1000);
-        c.setCityPopulation(600);
-        c.setCityPercentage(60.0f);
-        c.setNonCityPopulation(400);
-        c.setNonCityPercentage(40.0f);
+        c.setTotalPopulation(2000);
+        c.setCityPopulation(1500);
+        c.setCityPercentage(75.0f);
+        c.setNonCityPopulation(500);
+        c.setNonCityPercentage(25.0f);
         mock.add(c);
 
         PopulationReport report = new PopulationReport();
 
-        // Capture console output
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(out));
 
         report.printConCityPopulation(mock);
 
+        System.setOut(original);
+
         String output = out.toString();
 
         assertTrue(output.contains("Asia"));
-        assertTrue(output.contains("1000"));
-        assertTrue(output.contains("600"));
-        assertTrue(output.contains("40.0"));
+        assertTrue(output.contains("2000"));
+        assertTrue(output.contains("1500"));
+        assertTrue(output.contains("25.0"));
     }
 
+
     @Test
-    void getRegionCityPopulation() {
-        population_report.con = app.getConnection();
-        population_report = new PopulationReport();
-        ArrayList<Country> countries = population_report.getRegionCityPopulation();
-        population_report.printRegionCityPopulation(countries);
+    void testGetRegionCityPopulation() {
+        PopulationReport report = new PopulationReport();
+        report.con = app.getConnection();
+
+        ArrayList<Country> result = report.getRegionCityPopulation();
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+
+        Country eastAsia = result.stream()
+                .filter(c -> "Eastern Asia".equals(c.getRegion()))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(eastAsia);
+        assertTrue(eastAsia.getTotalPopulation() > 0);
+        assertTrue(eastAsia.getCityPercentage() >= 0);
     }
 
     @Test
     void testPrintRegionCityPopulation() {
-        population_report.con = app.getConnection();
         ArrayList<Country> mock = new ArrayList<>();
         Country c = new Country();
         c.setRegion("Eastern Asia");
@@ -155,11 +180,13 @@ public class AppIntegrationTest {
 
         PopulationReport report = new PopulationReport();
 
-        // Capture console output
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(out));
 
         report.printRegionCityPopulation(mock);
+
+        System.setOut(original);
 
         String output = out.toString();
 
@@ -170,16 +197,32 @@ public class AppIntegrationTest {
     }
 
     @Test
-    void getCountryCityPopulation() {
-        population_report.con = app.getConnection();
-        population_report = new PopulationReport();
-        ArrayList<Country> countries = population_report.getCountryCityPopulation();
-        population_report.printCountryCityPopulation(countries);
+    void testGetCountryCityPopulation() {
+        PopulationReport report = new PopulationReport();
+        report.con = app.getConnection();
+
+        ArrayList<Country> result = report.getCountryCityPopulation();
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+
+        Country japan = result.stream()
+                .filter(c -> "Japan".equals(c.getName()))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(japan);
+
+        assertTrue(japan.getTotalPopulation() > 0);
+        assertTrue(japan.getCityPopulation() >= 0);
+        assertEquals(
+                japan.getCityPopulation() + japan.getNonCityPopulation(),
+                japan.getTotalPopulation()
+        );
     }
 
     @Test
     void testPrintCountryCityPopulation() {
-        population_report.con = app.getConnection();
         ArrayList<Country> mock = new ArrayList<>();
         Country c = new Country();
         c.setName("Japan");
@@ -192,11 +235,13 @@ public class AppIntegrationTest {
 
         PopulationReport report = new PopulationReport();
 
-        // Capture console output
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(out));
 
         report.printCountryCityPopulation(mock);
+
+        System.setOut(original);
 
         String output = out.toString();
 
@@ -205,6 +250,7 @@ public class AppIntegrationTest {
         assertTrue(output.contains("600"));
         assertTrue(output.contains("40.0"));
     }
+
 }
 
 
