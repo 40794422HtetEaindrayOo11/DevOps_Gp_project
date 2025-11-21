@@ -39,13 +39,27 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
       - name: Integration Tests and CodeCov
+        run: mvn -B clean verify
+
+      # Debug: show JaCoCo files found
+      - name: Debug JaCoCo Outputs
         run: |
-          docker build -t database ./db 
-          docker run --name world -dp 33060:3306 database
-          mvn -Dtest=com.napier.gp_project.AppIntegrationTest test
-          docker stop world
-          docker rm world
-          docker image rm database
+          echo "== JaCoCo Files Found =="
+          find target -name "jacoco*.xml" -o -name "jacoco.exec"
+          echo ""
+          echo "== Timestamps =="
+          stat target/jacoco.exec  true
+          stat target/site/jacoco/jacoco.xml  true
+          echo ""
+          echo "== Coverage Preview =="
+          grep "<package" target/site/jacoco/jacoco.xml | head -n 20 || true
+
+      # Optional: Show test results
+      - name: List executed tests
+        run: |
+          echo "== Surefire Test Reports =="
+          find target/surefire-reports -name "*.xml"
+
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
@@ -53,6 +67,7 @@ jobs:
           directory: ./target/site/jacoco
           files: target/site/jacoco/jacoco.xml
           flags: Integration Tests
+          fail_ci_if_error: true
           verbose: true
 
       - name: Print coverage XML size
