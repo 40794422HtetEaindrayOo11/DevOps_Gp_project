@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -54,6 +56,8 @@ public class AppIntegrationTest {
         population_report.con = app.getConnection();
         population_report = new PopulationReport();
         population_report.getPopulationOfWorld();
+
+
     }
 
     @Test
@@ -97,6 +101,35 @@ public class AppIntegrationTest {
         population_report = new PopulationReport();
         ArrayList<Country> countries = population_report.getConCityPopulation();
         population_report.printConCityPopulation(countries);
+    }
+
+    @Test
+    void testPrintConCityPopulation() {
+        population_report.con = app.getConnection();
+        ArrayList<Country> mock = new ArrayList<>();
+        Country c = new Country();
+        c.setContinent("Asia");
+        c.setTotalPopulation(1000);
+        c.setCityPopulation(600);
+        c.setCityPercentage(60.0f);
+        c.setNonCityPopulation(400);
+        c.setNonCityPercentage(40.0f);
+        mock.add(c);
+
+        PopulationReport report = new PopulationReport();
+
+        // Capture console output
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        report.printConCityPopulation(mock);
+
+        String output = out.toString();
+
+        assertTrue(output.contains("Asia"));
+        assertTrue(output.contains("1000"));
+        assertTrue(output.contains("600"));
+        assertTrue(output.contains("40.0"));
     }
 
     @Test
