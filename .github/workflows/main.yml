@@ -16,12 +16,12 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.gp_project.AppTest test
+        run: mvn test
       - name: CodeCov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./target/site/jacoco
+          files: ./target/site/jacoco/jacoco.xml
           flags: Unit Tests
           verbose: true
 
@@ -42,7 +42,7 @@ jobs:
         run: |
           docker build -t database ./db 
           docker run --name world -dp 33060:3306 database
-          mvn -Dtest=com.napier.gp_project.AppIntegrationTest test
+          mvn test
           docker stop world
           docker rm world
           docker image rm database
@@ -50,7 +50,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./target/site/jacoco
+          files: ./target/site/jacoco/jacoco.xml
           flags: Integration Tests
           verbose: true
   build:
