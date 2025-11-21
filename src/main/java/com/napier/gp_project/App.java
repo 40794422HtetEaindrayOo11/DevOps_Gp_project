@@ -129,8 +129,4 @@ public class App {
 
         app.disconnect();
     }
-
-
-    public void printSalaries(Object o) {
-    }
 }
