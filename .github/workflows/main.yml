@@ -15,6 +15,7 @@ jobs:
         with:
           java-version: '24'
           distribution: 'temurin'
+
       - name: Unit Tests
         run: mvn -Dtest=com.napier.gp_project.AppTest test
       - name: CodeCov
