@@ -100,6 +100,7 @@ public class AppIntegrationTest {
         cityReports = new CityReports();
         cityReports.getTopNPopulatedCitiesInDistrict("Michigan",5);
     }
+
     @Test
     void getTopNPopulatedCitiesInCountry() {
         cityReports.con = app.getConnection();
@@ -107,6 +108,7 @@ public class AppIntegrationTest {
         cityReports.getTopNPopulatedCitiesInCountry("Myanmar",5);
     }
 }
+
 
 
 
