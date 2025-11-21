@@ -131,6 +131,5 @@ public class App {
     }
 
 
-    public void printSalaries(Object o) {
-    }
+
 }

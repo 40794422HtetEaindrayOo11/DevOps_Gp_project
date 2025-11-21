@@ -1,5 +1,9 @@
 name: A workflow for DevOps Group Project
-on: push
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
 
 jobs:
   UnitTests:
