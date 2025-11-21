@@ -39,7 +39,13 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
       - name: Integration Tests and CodeCov
-        run: mvn -Dtest=com.napier.gp_project.AppIntegrationTest test
+        run: |
+          docker build -t database ./db 
+          docker run --name world -dp 33060:3306 database
+          mvn -Dtest=com.napier.gp_project.AppIntegrationTest test
+          docker stop world
+          docker rm world
+          docker image rm database
 
       # Debug: show JaCoCo files found
       - name: Debug JaCoCo Outputs
