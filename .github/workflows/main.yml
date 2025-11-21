@@ -53,12 +53,28 @@ jobs:
           echo "== JaCoCo Files Found =="
           find target -name "jacoco*.xml" -o -name "jacoco.exec"
           echo ""
+          
           echo "== Timestamps =="
-          stat target/jacoco.exec  true
-          stat target/site/jacoco/jacoco.xml  true
+          if [ -f target/jacoco.exec ]; then
+            stat target/jacoco.exec
+          else
+            echo "target/jacoco.exec not found"
+          fi
+          
+          if [ -f target/site/jacoco/jacoco.xml ]; then
+            stat target/site/jacoco/jacoco.xml
+          else
+            echo "target/site/jacoco/jacoco.xml not found"
+          fi
+          
           echo ""
           echo "== Coverage Preview =="
-          grep "<package" target/site/jacoco/jacoco.xml | head -n 20 || true
+          if [ -f target/site/jacoco/jacoco.xml ]; then
+            grep "<package" target/site/jacoco/jacoco.xml | head -n 20
+          else
+            echo "No coverage XML to preview"
+          fi
+      
 
       # Optional: Show test results
       - name: List executed tests
