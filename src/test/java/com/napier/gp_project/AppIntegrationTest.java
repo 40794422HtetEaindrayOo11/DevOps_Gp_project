@@ -141,11 +141,69 @@ public class AppIntegrationTest {
     }
 
     @Test
+    void testPrintRegionCityPopulation() {
+        population_report.con = app.getConnection();
+        ArrayList<Country> mock = new ArrayList<>();
+        Country c = new Country();
+        c.setRegion("Eastern Asia");
+        c.setTotalPopulation(1000);
+        c.setCityPopulation(600);
+        c.setCityPercentage(60.0f);
+        c.setNonCityPopulation(400);
+        c.setNonCityPercentage(40.0f);
+        mock.add(c);
+
+        PopulationReport report = new PopulationReport();
+
+        // Capture console output
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        report.printRegionCityPopulation(mock);
+
+        String output = out.toString();
+
+        assertTrue(output.contains("Eastern Asia"));
+        assertTrue(output.contains("1000"));
+        assertTrue(output.contains("600"));
+        assertTrue(output.contains("40.0"));
+    }
+
+    @Test
     void getCountryCityPopulation() {
         population_report.con = app.getConnection();
         population_report = new PopulationReport();
         ArrayList<Country> countries = population_report.getCountryCityPopulation();
         population_report.printCountryCityPopulation(countries);
+    }
+
+    @Test
+    void testPrintCountryCityPopulation() {
+        population_report.con = app.getConnection();
+        ArrayList<Country> mock = new ArrayList<>();
+        Country c = new Country();
+        c.setName("Japan");
+        c.setTotalPopulation(1000);
+        c.setCityPopulation(600);
+        c.setCityPercentage(60.0f);
+        c.setNonCityPopulation(400);
+        c.setNonCityPercentage(40.0f);
+        mock.add(c);
+
+        PopulationReport report = new PopulationReport();
+
+        // Capture console output
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+
+        report.printCountryCityPopulation(mock);
+
+        String output = out.toString();
+
+        assertTrue(output.contains("Japan"));
+        assertTrue(output.contains("1000"));
+        assertTrue(output.contains("600"));
+        assertTrue(output.contains("40.0"));
     }
 }
 
