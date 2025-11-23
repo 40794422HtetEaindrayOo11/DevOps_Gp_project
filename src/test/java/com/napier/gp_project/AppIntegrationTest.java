@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppIntegrationTest {
     static App app;
     Capital_city_reports capital_city_reports;
+    LanguageReport language_report;
     Country_reports country_reports;
     CityReports cityReports;
     PopulationReport population_report;
@@ -356,6 +357,21 @@ public class AppIntegrationTest {
         assertTrue(output.contains("600"));
         assertTrue(output.contains("40.0"));
     }
+
+
+    @Test
+    void getLanguageReport() {
+        language_report = new LanguageReport(app.getConnection());
+        var list = language_report.getLanguageReport();
+        language_report.printLanguageReport(list);
+    }
+
+
+
+
+
+
+
 
 }
 
