@@ -27,6 +27,7 @@ public class AppIntegrationTest {
 
     }
 
+    // Capital Cities Reports Integration Test
     @Test
     void getAllCapitalCitiesInWorldTest()
     {
@@ -50,6 +51,33 @@ public class AppIntegrationTest {
         capital_city_reports = new Capital_city_reports();
         capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
     }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInWorldTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(10);
+    }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInContinentTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Africa",10);
+    }
+
+    @Test
+    void getTopNPopulatedCapitalCitiesInRegionTest()
+    {
+        capital_city_reports.con = app.getConnection();
+        capital_city_reports = new Capital_city_reports();
+        capital_city_reports.getTopNPopulatedCapitalCitiesInRegion(5,"Caribbean");
+    }
+
+    //Cities Report Integration Test
+
     @Test
     void getCitiesInWorldTest() {
         cityReports.con = app.getConnection();
@@ -106,8 +134,7 @@ public class AppIntegrationTest {
     }
 
 
-
-
+    //Country Reports Integration Tests
     @Test
     void getCountriesInWorldTest()
     {
@@ -359,12 +386,16 @@ public class AppIntegrationTest {
     }
 
 
+    // Language Reports Integration Tests
     @Test
     void getLanguageReport() {
         language_report = new LanguageReport(app.getConnection());
         var list = language_report.getLanguageReport();
         language_report.printLanguageReport(list);
     }
+
+
+
 
 
 
