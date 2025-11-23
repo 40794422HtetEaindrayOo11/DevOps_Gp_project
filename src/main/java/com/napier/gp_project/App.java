@@ -113,7 +113,7 @@ public class App {
         pr.getPopulationOfContinent();
         pr.getPopulationOfRegion();
         pr.getPopulationOfCountry();
-        // --- Population of the poeple who are living in cities and those who don't for Continent level ---
+        //        --- Population of the poeple who are living in cities and those who don't for Continent level ---
         ArrayList<Country> countries = pr.getConCityPopulation();
         pr.printConCityPopulation(countries);
         // --- Population of the poeple who are living in cities and those who don't for Region level ---
