@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.gp_project.AppTest test jacoco:report
+        run: mvn -Dtest=com.napier.gp_project.AppTest test
       - name: Upload Coverage
         uses: codecov/codecov-action@v5
         with:
