@@ -62,7 +62,7 @@ jobs:
           flags: integration
           verbose: true
   build:
-    name: Build and Start Using docker-compose
+    name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
