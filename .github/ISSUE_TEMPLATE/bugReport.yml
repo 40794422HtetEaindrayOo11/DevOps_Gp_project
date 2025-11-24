@@ -4,12 +4,7 @@ title: "[Bug]: "
 labels: ["bug", "triage"]
 projects: ["40794422HtetEaindrayOo11/DevOps_GP_project"]
 assignees:
-  - 40794422HtetEaindrayOo11
-  - Khantwaiyan2313
-  - SNK-40794423
-  - KaungHtetSan29
-  - a2k3k4ok-netizen
-  - 40794504-HtooHtetAung
+  - 40794422HtetEaindrayOo11, Khantwaiyan2313, SNK-40794423, KaungHtetSan29, a2k3k4ok-netizen, 40794504-HtooHtetAung
 body:
   - type: markdown
     attributes:
