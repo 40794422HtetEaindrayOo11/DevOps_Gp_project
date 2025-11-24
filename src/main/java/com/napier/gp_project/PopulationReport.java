@@ -7,12 +7,29 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class generates all population-related reports for:
+ * - Continents
+ * - Regions
+ * - Countries
+ * - Cities
+ * - Districts
+ *
+ * It uses SQL queries to extract population statistics from the MySQL world database.
+ * The data is stored in Country objects and then printed in formatted tables.
+ */
 public class PopulationReport {
     public static Connection con = null;  // store the connection
 
 
     /**
-     * Fetching the required data from database
+     * Retrieves population statistics for each continent, including:
+     * - Total population of the continent
+     * - Population living in cities
+     * - Population not living in cities
+     * - Percentage values for city and non-city population
+     *
+     * @return ArrayList<Country> list of continent-level population data
      */
     public ArrayList<Country> getConCityPopulation() {
         try {
@@ -61,7 +78,7 @@ public class PopulationReport {
     }
 
     /**
-     * Printing out the query result in a table format
+     * Prints continent-level population table
      */
     public void printConCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nContinent population report for those who live in cities and those who don't");
@@ -86,6 +103,9 @@ public class PopulationReport {
         }
     }
 
+    /**
+     * Retrieves region-level population statistics using the same logic as continents.
+     */
     public ArrayList<Country> getRegionCityPopulation() {
         try {
             Statement stmt = con.createStatement();
@@ -132,7 +152,7 @@ public class PopulationReport {
     }
 
     /**
-     * Printing out the query result in a table format
+     * Prints region-level population statistics
      */
     public void printRegionCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nRegion population report for those who live in cities and those who don't");
@@ -158,6 +178,9 @@ public class PopulationReport {
         }
     }
 
+    /**
+     * Retrieves country-level population statistics
+     */
     public ArrayList<Country> getCountryCityPopulation() {
         try {
             Statement stmt = con.createStatement();
@@ -205,7 +228,7 @@ public class PopulationReport {
     }
 
     /**
-     * Printing out the query result in a table format
+     * Prints country-level city vs non-city population statistics
      */
     public void printCountryCityPopulation(ArrayList<Country> countries) {
         System.out.println("\nCountry population report for those who live in cities and those who don't");
@@ -232,7 +255,7 @@ public class PopulationReport {
     }
 
     /**
-     * Fetch and print the population of the world
+     * Reports the total population of the entire world
      */
     public void getPopulationOfWorld() {
         try {
@@ -259,7 +282,7 @@ public class PopulationReport {
     }
 
     /**
-     * Fetch and print the population of each continent
+     * Report the total population of each continent
      */
     public void getPopulationOfContinent() {
         try {
@@ -290,7 +313,7 @@ public class PopulationReport {
     }
 
     /**
-     * Fetch and print the population of each region
+     * Report the population of each region
      */
     public void getPopulationOfRegion() {
         try {
@@ -321,7 +344,7 @@ public class PopulationReport {
     }
 
     /**
-     * Fetch and print the population of each country
+     * Report the population of each country in the database
      */
     public void getPopulationOfCountry() {
         try {
@@ -417,8 +440,5 @@ public class PopulationReport {
             System.out.println("Error generating district population report: " + e.getMessage());
         }
     }
-
-
-
 
 }

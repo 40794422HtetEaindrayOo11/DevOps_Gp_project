@@ -11,7 +11,8 @@ public class CityReports {
     public static Connection con = null;
 
     /**
-     * All the cities in the world organised by largest population to smallest.
+     * Retrieves and displays all the cities in the world,
+     * sorted by population from largest to smallest.
      */
     public void getCitiesInWorld() {
         try {
@@ -25,6 +26,7 @@ public class CityReports {
 
             ArrayList<City> cities = new ArrayList<>();
 
+            // Convert each database record into a City object
             while (rset.next()) {
                 City c = new City();
                 c.setName(rset.getString("CityName"));
@@ -48,8 +50,8 @@ public class CityReports {
     }
 
     /**
-     * All the cities in the continent organized by largest population to smallest.
-     * @param continentName
+     * Retrieves all cities in a specific continent, ordered by population.
+     * @param continentName The name of the continent.
      */
     public void getCitiesByContinent(String continentName) {
         try {
@@ -93,8 +95,8 @@ public class CityReports {
     }
 
     /**
-     * All the cities in a region organized by largest population to smallest.
-     * @param regionName
+     * Retrieves all cities in a specific region, sorted by population.
+     * @param regionName The region name.
      */
     public void getCitiesByRegion(String regionName) {
         try {
@@ -139,7 +141,8 @@ public class CityReports {
 
 
     /**
-     * Top N populated cities in the world.
+     * Retrieves the top N most populated cities in the world.
+     * Uses LIMIT ? to restrict number of results.
      */
     public void getTopNPopulatedCitiesInWorld(int n) {
         try {
@@ -177,7 +180,7 @@ public class CityReports {
     }
 
     /**
-     * The top N populated cities in a region where N is provided by the user.
+     * Retrieves the top N populated cities in a specific region.
      */
     public void getTopNPopulatedCitiesInRegion(String region, int n) {
         try {
@@ -219,7 +222,7 @@ public class CityReports {
     }
 
     /**
-     * The top N populated cities in a continent where N is provided by the user.
+     * Retrieves the top N populated cities in a continent.
      */
     public void getTopNPopulatedCitiesInContinent(String continent, int n) {
         try {
@@ -261,7 +264,7 @@ public class CityReports {
     }
 
     /**
-     * The top N populated cities in a continent where N is provided by the user.
+     * Retrieves the top N populated cities in a district.
      */
     public void getTopNPopulatedCitiesInDistrict(String district, int n) {
         try {

@@ -6,11 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class provides all report-generation methods related to **capital cities**.
+ * It retrieves data from the `world` MySQL database using SQL queries
+ * and prints formatted population reports.
+ */
 public class Capital_city_reports {
+    // Holds the result of SQL queries
     public ResultSet rset;
+
+    // Shared database connection (passed from App.java)
     public static Connection con = null;
 
-    // All Capital Cities in the world
+    /**
+     * Retrieves and prints **all capital cities in the world**
+     * sorted by population from largest to smallest.
+     */
     public void getAllCapitalCitiesInWorld() {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
@@ -20,11 +31,13 @@ public class Capital_city_reports {
                     "JOIN country ON city.ID = country.Capital " +
                     "ORDER BY city.Population DESC";
 
+            // Prepare and execute SQL statement
             PreparedStatement pstmt = con.prepareStatement(sql);
             rset = pstmt.executeQuery();
 
             ArrayList<City> capitals = new ArrayList<>();
 
+            // Loop through results and build City objects
             while (rset.next()) {
                 City c = new City();
                 c.setName(rset.getString("CapitalName"));
@@ -33,9 +46,11 @@ public class Capital_city_reports {
                 capitals.add(c);
             }
 
+            // Output report header
             System.out.println("\nAll Capital Cities in the World (Organised by Population - Largest to Smallest)");
             System.out.printf("%-35s %-25s %15s%n", "Capital Name", "Country", "Population");
 
+            // Output each city in formatted table
             for (City c : capitals) {
                 System.out.printf("%-35s %-25s %,15d%n",
                         c.getName(),
@@ -47,7 +62,12 @@ public class Capital_city_reports {
             System.out.println("Error generating capital city report: " + e.getMessage());
         }
     }
-// All Capital city in continent
+
+    /**
+     * Retrieves and prints all capital cities within a **specific continent**.
+     *
+     * @param continent The continent to filter results by.
+     */
     public void getAllCapitalCitiesInContinent(String continent) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
@@ -87,7 +107,11 @@ public class Capital_city_reports {
         }
     }
 
-    // All Capital cities in region
+    /**
+     * Retrieves and prints all capital cities for a **specific region**.
+     *
+     * @param region Region name (e.g., "Caribbean", "Western Europe")
+     */
     public void getAllCapitalCitiesInRegion(String region) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
@@ -126,7 +150,11 @@ public class Capital_city_reports {
             System.out.println("Error generating capital city report for " + region + ": " + e.getMessage());
         }
     }
-    // Top N populated cities in the world
+    /**
+     * Retrieves the **top N most populated capital cities in the world**.
+     *
+     * @param n Number of cities to return.
+     */
     public void getTopNPopulatedCapitalCitiesInWorld(int n) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
@@ -165,7 +193,12 @@ public class Capital_city_reports {
             System.out.println("Error generating top N capital city report: " + e.getMessage());}
      }
 
-    // Top N populated cities in a continent
+    /**
+     * Retrieves top N capital cities in a **particular continent**.
+     *
+     * @param continent Continent filter
+     * @param n Number of results
+     */
     public void getTopNPopulatedCapitalCitiesInContinent(String continent, int n) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +
@@ -208,6 +241,10 @@ public class Capital_city_reports {
         catch (SQLException e) {
             System.out.println("Error generating top N capital city in " + continent + "report: " + e.getMessage());}
     }
+
+    /**
+     * Retrieves top N most populated capital cities for a **specific region**.
+     */
     public void getTopNPopulatedCapitalCitiesInRegion(int n, String region) {
         try {
             String sql = "SELECT city.Name AS CapitalName, " +

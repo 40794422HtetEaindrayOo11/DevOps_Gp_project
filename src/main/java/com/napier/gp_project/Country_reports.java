@@ -6,11 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This class contains all reporting functionality related to Country data.
+ * It connects to the database, executes SQL queries, retrieves results,
+ * converts them into Country objects, and prints formatted reports.
+ */
 public class Country_reports {
 
     public static Connection con = null;
     /**
-     * All the countries in the world organized by population largest to smallest.
+     * Retrieves and displays all countries in the world,
+     * ordered by population from largest to smallest.
+     *
      */
     public void getCountriesInWorld() {
         try {
@@ -51,8 +58,10 @@ public class Country_reports {
     }
 
     /**
-     * All the countries in the region organized by population largest to smallest.
-     * @param regionName
+     * Retrieves and displays all countries from a specific region,
+     * ordered by population from largest to smallest.
+     *
+     * @param regionName The region for which the report should be generated.
      */
 
     public void getCountriesByRegion(String regionName) {
@@ -96,8 +105,10 @@ public class Country_reports {
     }
 
     /**
-     * ALl the countries in a continent organized by largest population to smallest
-     * @param continentName
+     * Retrieves all countries within a specified continent,
+     * ordered by population from largest to smallest.
+     *
+     * @param continentName The continent for the report.
      */
 
     public void getCountriesByContinent(String continentName) {
@@ -141,7 +152,9 @@ public class Country_reports {
 
 
     /**
-     * Top N populated countries in the world.
+     * Retrieves the top N most populated countries in the world.
+     *
+     * @param n Number of countries to return
      */
     public void getTopNPopulatedCountriesInWorld(int n) {
         try {
@@ -180,7 +193,10 @@ public class Country_reports {
     }
 
     /**
-     * Top N populated countries in a specific continent
+     * Retrieves the top N populated countries within a specific continent.
+     *
+     * @param continent The continent to filter
+     * @param n Number of countries
      */
     public void getTopNPopulatedCountriesInContinent(String continent, int n) {
         try {
@@ -221,7 +237,10 @@ public class Country_reports {
     }
 
     /**
-     * Top N populated countries in a specific region where N is provided by the user.
+     * Retrieves the top N populated countries within a specific region.
+     *
+     * @param region Region name
+     * @param n Number of countries
      */
     public void getTopNPopulatedCountriesInRegion(String region, int n) {
         try {
@@ -260,10 +279,5 @@ public class Country_reports {
             System.out.println("Error generating top N countries in region report: " + e.getMessage());
         }
     }
-
-
-
-
-
 
 }
