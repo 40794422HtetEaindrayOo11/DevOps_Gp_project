@@ -3,8 +3,6 @@ package com.napier.gp_project;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +29,6 @@ public class LanguageReport {
 
     /**
      * Retrieves the major language statistics from the database.
-     *
      * PROCESS:
      *  1. Join countrylanguage with country table
      *  2. Multiply each country's population by the percentage of speakers
@@ -91,7 +88,6 @@ public class LanguageReport {
 
     /**
      * Prints the language report in a clean table format.
-     *
      * TABLE FORMAT:
      *  Language | Total Population | Speaker Percentage
      *

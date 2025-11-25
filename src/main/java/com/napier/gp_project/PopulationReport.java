@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * - Countries
  * - Cities
  * - Districts
- *
  * It uses SQL queries to extract population statistics from the MySQL world database.
  * The data is stored in Country objects and then printed in formatted tables.
  */
