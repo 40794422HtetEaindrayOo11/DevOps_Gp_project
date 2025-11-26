@@ -95,24 +95,24 @@ public class App {
         }
 
         //Capital City Reports
-        Capital_city_reports capital_city_reports = new Capital_city_reports();
+        Capital_city_reports capitalCityReports = new Capital_city_reports();
         Capital_city_reports.con = app.con;
-        capital_city_reports.getAllCapitalCitiesInWorld();
-        capital_city_reports.getAllCapitalCitiesInContinent("Asia");
-        capital_city_reports.getAllCapitalCitiesInRegion("Caribbean");
-        capital_city_reports.getTopNPopulatedCapitalCitiesInWorld(5);
-        capital_city_reports.getTopNPopulatedCapitalCitiesInContinent("Asia",10);
-        capital_city_reports.getTopNPopulatedCapitalCitiesInRegion(5,"Western Europe");
+        capitalCityReports.getAllCapitalCitiesInWorld();
+        capitalCityReports.getAllCapitalCitiesInContinent("Asia");
+        capitalCityReports.getAllCapitalCitiesInRegion("Caribbean");
+        capitalCityReports.getTopNPopulatedCapitalCitiesInWorld(5);
+        capitalCityReports.getTopNPopulatedCapitalCitiesInContinent("Asia",10);
+        capitalCityReports.getTopNPopulatedCapitalCitiesInRegion(5,"Western Europe");
 
         //Country Reports
-        Country_reports country_reports = new Country_reports();
+        Country_reports countryReports = new Country_reports();
         Country_reports.con = app.con;
-        country_reports.getCountriesInWorld();
-        country_reports.getCountriesByRegion("Southeast Asia");
-        country_reports.getCountriesByContinent("Asia");
-        country_reports.getTopNPopulatedCountriesInWorld(10);
-        country_reports.getTopNPopulatedCountriesInContinent("Asia", 5);
-        country_reports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
+        countryReports.getCountriesInWorld();
+        countryReports.getCountriesByRegion("Southeast Asia");
+        countryReports.getCountriesByContinent("Asia");
+        countryReports.getTopNPopulatedCountriesInWorld(10);
+        countryReports.getTopNPopulatedCountriesInContinent("Asia", 5);
+        countryReports.getTopNPopulatedCountriesInRegion("Southeast Asia", 5);
 
         //City Reports
         CityReports cityReports = new CityReports();
