@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class provides all report-generation methods related to **capital cities**.
@@ -17,6 +19,7 @@ public class Capital_city_reports {
 
     // Shared database connection (passed from App.java)
     public static Connection con = null;
+    Logger log = Logger.getLogger(Capital_city_reports.class.getName());
 
     /**
      * Retrieves and prints **all capital cities in the world**
@@ -59,7 +62,9 @@ public class Capital_city_reports {
             }
         }
         catch (SQLException e) {
-            System.out.println("Error generating capital city report: " + e.getMessage());
+            if (log.isLoggable(Level.ALL)) {
+                log.fine("Error generating capital city report: " + e.getMessage());
+            }
         }
     }
 

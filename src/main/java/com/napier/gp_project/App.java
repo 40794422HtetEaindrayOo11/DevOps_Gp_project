@@ -2,12 +2,14 @@ package com.napier.gp_project;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App {
 
     // Shared database connection for the entire application
     private static Connection con = null;
-
+    Logger log = Logger.getLogger(App.class.getName());
     /**
      * Establishes a connection with the database
      * @param location Database hostname and port (e.g., "localhost:33060")
@@ -22,13 +24,13 @@ public class App {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
+            log.fine("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
         for (int i = 0; i < retries; ++i) {
-            System.out.println("Connecting to database...");
+            log.fine("Connecting to database...");
             try {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
@@ -39,13 +41,18 @@ public class App {
                         "root",
                         "example"
                 );
-                System.out.println("Successfully connected");
+                log.fine("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
-                System.out.println(sqle.getMessage());
+                if (log.isLoggable(Level.FINE)) {
+                    int finalI = i;
+                    log.fine(() -> "Failed to connect to database attempt " + finalI);
+                    log.fine(() -> sqle.getMessage());
+                }
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted? Should not happen.");
+                if (log.isLoggable(Level.FINE)) {
+                    log.fine(() -> "Thread interrupted? Should not happen.");
+                }
             }
         }
     }
@@ -58,9 +65,9 @@ public class App {
         if (con != null) {
             try {
                 con.close();
-                System.out.println("Disconnected from database.");
+                log.fine("Disconnected from database.");
             } catch (Exception e) {
-                System.out.println("Error closing connection to database");
+                log.fine("Error closing connection to database");
             }
         }
     }
